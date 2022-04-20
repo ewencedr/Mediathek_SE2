@@ -64,36 +64,25 @@ public class VerleihServiceImplTest
     }
 
     @Test
-    public void testVerleihAn()
+    public void testVerleiheAn()
     {
-        List<Medium> medien = new ArrayList<Medium>();
-        medien.add(_bad);
-        medien.add(_shape);
-        Datum ausleihDatum = new Datum(12, 4, 2009);
+        Datum datum = new Datum(20, 04, 2022);
+        List<Medium> testMedien = new ArrayList<Medium>();
+        testMedien.add(_bad);
+        testMedien.add(_abbey);
 
-        _verleihService.verleiheAn(_homer, medien, ausleihDatum);
-
+        _verleihService.verleiheAn(_brian, testMedien, datum);
         assertTrue(_verleihService.istVerliehen(_bad));
-        assertEquals(_verleihService.getEntleiherFuer(_bad), _homer);
+        assertTrue(_verleihService.istVerliehen(_abbey));
+        assertFalse(_verleihService.istVerliehen(_shape));
+        assertTrue(_verleihService.sindAlleVerliehen(testMedien));
+        assertEquals(_brian, _verleihService.getEntleiherFuer(_bad));
+
     }
 
     @Test
     public void testNochEinTestFall2()
     {
-        List<Medium> medien = new ArrayList<Medium>();
-        medien.add(_bad);
-        medien.add(_shape);
-
-        Datum ausleihDatum = new Datum(12, 4, 2009);
-
-        _verleihService.verleiheAn(_homer, medien, ausleihDatum);
-
-        Datum rueckgabeDatum = new Datum(12, 4, 2010);
-        _verleihService.nimmZurueck(medien, rueckgabeDatum);
-
-        assertFalse(_verleihService.istVerliehen(_bad));
-        assertFalse(_verleihService.getEntleiherFuer(_bad)
-            .equals(_homer));
     }
 
     @Test
@@ -134,5 +123,4 @@ public class VerleihServiceImplTest
         _verleihService = new VerleihServiceImpl(_kundenstamm, _medienbestand,
                 new ArrayList<Verleihkarte>());
     }
-
 }
