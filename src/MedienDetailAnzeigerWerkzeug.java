@@ -34,8 +34,38 @@ class MedienDetailAnzeigerWerkzeug
         assert medien != null : "Vorbedingung verletzt: (medien != null)";
         JTextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
         // TODO Aufgabe 3.4.2 Die Mediendetails sollen angezeigt werden
-        selectedMedienTextArea.setText("");
+        String string = "";
+        for (Medium medium : medien)
+        {
+            string = string + medium.getFormatiertenString() + "\n \n";
+        }
+        selectedMedienTextArea.setText(string);
+
     }
+
+    //        /**
+    //         * Setzt die Liste der Medien deren Details angezeigt werden sollen.
+    //         * 
+    //         * @param medien Eine Liste von Medien.
+    //         * 
+    //         * @require (medien != null)
+    //         */
+    //        public void setMedien(List<Medium> medien)
+    //        {
+    //            assert medien != null : "Vorbedingung verletzt: (medien != null)";
+    //            JTextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
+    //            // TODO Aufgabe 3.4.2 Die Mediendetails sollen angezeigt werden
+    //            String string = "";
+    //            for (Medium medium : medien) {
+    //                if (medium instanceof Videospiel) {
+    //                    Videospiel videospiel = (Videospiel)medium;
+    //                    string = string + videospiel.getFormatiertenString() + "\n \n";
+    //                }
+    //            }
+    //            
+    //            selectedMedienTextArea.setText(string);
+    //    
+    //        }
 
     /**
      * Gibt das Panel dieses Subwerkzeugs zurück.

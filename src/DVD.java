@@ -101,4 +101,11 @@ class DVD implements Medium
         return _titel;
     }
 
+    @Override
+    public String getFormatiertenString()
+    {
+        String string = getTitel() + "\n" + getKommentar();
+        return string;
+    }
+
 }

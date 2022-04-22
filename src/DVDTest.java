@@ -49,6 +49,12 @@ public class DVDTest
                 _dvd1.equals(_dvd1));
     }
 
+    @Test
+    public void testGetFormatiertenString()
+    {
+        assertEquals(TITEL + "\n" + KOMMENTAR, _dvd1.getFormatiertenString());
+    }
+
     protected DVD getMedium()
     {
         return new DVD(TITEL, KOMMENTAR, REGISSEUR, LAENGE);

@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -47,6 +48,13 @@ public class CDTest
                 _cd1.equals(_cd2));
         assertTrue("Dasselbe Exemplare der gleichen CD sollte gleich sein",
                 _cd1.equals(_cd1));
+    }
+
+    @Test
+    public void testGetFormatiertenString()
+    {
+        //assertEquals(TITEL + "\n" + KOMMENTAR, _cd1.getFormatiertenString());
+        assertNotNull(_cd1.getFormatiertenString());
     }
 
     private CD getMedium()
