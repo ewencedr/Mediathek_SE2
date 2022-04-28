@@ -11,9 +11,9 @@ import java.util.List;
  * müssen das Interface ServiceObserver implementieren.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public interface MedienbestandService extends ObservableService
+interface MedienbestandService extends ObservableService
 {
 
     /**
@@ -23,9 +23,7 @@ public interface MedienbestandService extends ObservableService
      * 
      * @param medium Ein zu entfernendes Medium
      * 
-     * @require medium != null
      * @require enthaeltMedium(medium)
-     * 
      * @ensure !enthaeltMedium(medium)
      */
     void entferneMedium(Medium medium);
@@ -36,22 +34,21 @@ public interface MedienbestandService extends ObservableService
      * @param medium Ein Medium
      * @return true, wenn Medium im Medienbestand enthalten ist, andernfalls
      *         false.
-     *         
+     * 
      * @require medium != null
      */
     boolean enthaeltMedium(Medium medium);
 
     /**
-     * Fügt ein weiteres, neu angeschafftes Medium in den Bestand ein. Ist ein
-     * Medium mehrfach angeschafft worden, so kann es auch mehrfach eingepflegt
-     * werden. Jedes Exemplar im Bestand repräsentiert ein real existierendes
-     * Medium.
+     * Fügt ein weiteres, neu angeschafftes Medium in den Bestand ein. Jedes
+     * Exemplar im Bestand repräsentiert ein real existierendes Medium. Ist ein
+     * Medium mehrfach angeschafft worden, so muss ein weiteres Exemplar mit
+     * denselben Eigenschaften eingepflegt werden.
      * 
      * @param neuesMedium Ein neues Medium
      * 
-     * @require neuesMedium != null
-     * 
-     * @ensure enthaeltMedium(neuesMedium) == true
+     * @require !enthaeltMedium(neuesMedium)
+     * @ensure enthaeltMedium(neuesMedium)
      */
     void fuegeMediumEin(Medium neuesMedium);
 
@@ -59,6 +56,8 @@ public interface MedienbestandService extends ObservableService
      * Liefert alle vorhandenen Medien.
      * 
      * @return Eine Kopie der Liste mit allen vorhandenen Medien.
+     * 
+     * @ensure result != null
      */
     List<Medium> getMedien();
 

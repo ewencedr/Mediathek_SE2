@@ -6,7 +6,7 @@ import java.util.Comparator;
  * angezeigt werden können.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MedienComparator implements Comparator<Medium>, Serializable
 {
@@ -27,12 +27,11 @@ class MedienComparator implements Comparator<Medium>, Serializable
         int result = 0;
         if ((medium1 != null) && (medium2 != null))
         {
-            result = medium1.getMedienBezeichnung()
-                .compareTo(medium2.getMedienBezeichnung());
+            result = medium1.getMedienBezeichnung().compareTo(
+                    medium2.getMedienBezeichnung());
             if (result == 0)
             {
-                result = medium1.getTitel()
-                    .compareTo(medium2.getTitel());
+                result = medium1.getTitel().compareTo(medium2.getTitel());
             }
         }
         return result;

@@ -12,7 +12,7 @@ import javax.swing.border.TitledBorder;
  * MedienDetailAnzeigerWerkzeug.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MedienDetailAnzeigerUI
 {
@@ -48,10 +48,10 @@ class MedienDetailAnzeigerUI
                 null, "Ausgewählte Medien", TitledBorder.LEADING,
                 TitledBorder.DEFAULT_POSITION, UIConstants.HEADER_FONT));
         medienAnzeigerScrollPane.setBackground(UIConstants.BACKGROUND_COLOR);
-        medienAnzeigerScrollPane.getVerticalScrollBar()
-            .setBackground(UIConstants.BACKGROUND_COLOR);
-        medienAnzeigerScrollPane.getHorizontalScrollBar()
-            .setBackground(UIConstants.BACKGROUND_COLOR);
+        medienAnzeigerScrollPane.getVerticalScrollBar().setBackground(
+                UIConstants.BACKGROUND_COLOR);
+        medienAnzeigerScrollPane.getHorizontalScrollBar().setBackground(
+                UIConstants.BACKGROUND_COLOR);
 
         _medienAnzeigerTextArea = new JTextArea();
         _medienAnzeigerTextArea.setBackground(UIConstants.BACKGROUND_COLOR);

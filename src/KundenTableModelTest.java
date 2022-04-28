@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class KundenTableModelTest
@@ -13,7 +14,8 @@ public class KundenTableModelTest
     private Kunde _kundeSchmitz;
     private KundenTableModel _model;
 
-    public KundenTableModelTest()
+    @Before
+    public void setUp()
     {
         // Die Kunden werden in nicht alphabetischer Reihenfolge eingefügt,
         // um die Sortierfunktion zu testen.

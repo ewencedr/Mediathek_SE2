@@ -6,7 +6,7 @@ import java.util.Comparator;
  * angezeigt werden können.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class KundenComparator implements Comparator<Kunde>, Serializable
 {
@@ -27,8 +27,7 @@ class KundenComparator implements Comparator<Kunde>, Serializable
         int result = 0;
         if ((kunde1 != null) && (kunde2 != null))
         {
-            result = kunde1.getNachname()
-                .compareTo(kunde2.getNachname());
+            result = kunde1.getNachname().compareTo(kunde2.getNachname());
         }
         return result;
     }

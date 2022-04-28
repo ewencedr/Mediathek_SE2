@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class AusleiheMedienTableModelTest
@@ -12,17 +13,19 @@ public class AusleiheMedienTableModelTest
     private Medium _cd1;
     private Medium _cd2;
     private Medium _cd3;
+    private Kunde _vormerker;
     private AusleiheMedienTableModel _model;
 
-    public AusleiheMedienTableModelTest()
+    @Before
+    public void setUp()
     {
         _cd1 = new CD("CD1-Titel", "CD1-Kommentar", "CD1-Interpret", 42);
         _cd2 = new CD("CD2-Titel", "CD2-Kommentar", "CD2-Regisseur", 120);
         _cd3 = new CD("CD1-Titel", "CD1-Kommentar", "CD1-Interpret", 42);
         List<AusleiheMedienFormatierer> medien = new ArrayList<AusleiheMedienFormatierer>();
-        medien.add(new AusleiheMedienFormatierer(_cd1, true));
-        medien.add(new AusleiheMedienFormatierer(_cd2, false));
-        medien.add(new AusleiheMedienFormatierer(_cd3, true));
+        medien.add(new AusleiheMedienFormatierer(_cd1, true, _vormerker));
+        medien.add(new AusleiheMedienFormatierer(_cd2, false, _vormerker));
+        medien.add(new AusleiheMedienFormatierer(_cd3, true, _vormerker));
         _model = new AusleiheMedienTableModel();
         _model.setMedien(medien);
     }

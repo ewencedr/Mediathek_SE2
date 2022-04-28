@@ -9,7 +9,7 @@
  * werden. Um die Verwaltung der Karten kümmert sich der VerleihService
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class Verleihkarte
 {
@@ -37,7 +37,7 @@ class Verleihkarte
      */
     public Verleihkarte(Kunde entleiher, Medium medium, Datum ausleihdatum)
     {
-        assert entleiher != null : "Vorbedingung verletzt: kunde != null";
+        assert entleiher != null : "Vorbedingung verletzt: entleiher != null";
         assert medium != null : "Vorbedingung verletzt: medium != null";
         assert ausleihdatum != null : "Vorbedingung verletzt: ausleihdatum != null";
 
@@ -71,6 +71,22 @@ class Verleihkarte
     }
 
     /**
+     * Gibt eine String-Darstellung der Verleihkarte (enhält Zeilenumbrüche)
+     * zurück.
+     * 
+     * @return Eine formatierte Stringrepäsentation der Verleihkarte. Enthält
+     *         Zeilenumbrüche.
+     * 
+     * @ensure result != null
+     */
+    public String getFormatiertenString()
+    {
+        return _medium.getFormatiertenString() + "am "
+                + _ausleihdatum.toString() + " verliehen an\n"
+                + _entleiher.getFormatiertenString();
+    }
+
+    /**
      * Gibt das Medium, dessen Ausleihe auf der Karte vermerkt ist, zurück.
      * 
      * @return Das Medium, dessen Ausleihe auf dieser Karte vermerkt ist.
@@ -91,6 +107,8 @@ class Verleihkarte
      */
     public Geldbetrag getMietgebuehr()
     {
+        // TODO für Aufgabe 4.2.4: Dummy-Implementation ersetzen, sobald ein
+        // Medium die benötigte Funktionialität anbietet.
         return new Geldbetrag(0);
     }
 
@@ -102,8 +120,7 @@ class Verleihkarte
      */
     public int getAusleihdauer()
     {
-        return Datum.heute()
-            .tageSeit(getAusleihdatum()) + 1;
+        return Datum.heute().tageSeit(getAusleihdatum()) + 1;
     }
 
     @Override
@@ -127,16 +144,18 @@ class Verleihkarte
         {
             Verleihkarte other = (Verleihkarte) obj;
 
-            if (other.getAusleihdatum()
-                .equals(_ausleihdatum)
-                    && other.getEntleiher()
-                        .equals(_entleiher)
-                    && other.getMedium()
-                        .equals(_medium))
+            if (other.getAusleihdatum().equals(_ausleihdatum)
+                    && other.getEntleiher().equals(_entleiher)
+                    && other.getMedium().equals(_medium))
 
                 result = true;
         }
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return getFormatiertenString();
+    }
 }

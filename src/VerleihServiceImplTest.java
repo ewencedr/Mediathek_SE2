@@ -3,124 +3,135 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
-//Die in den Testfällen verwendeten assert-Anweisungen werden über
-//einen sogenannten statischen Import bereitgestellt, zum Beispiel:
-//import static org.junit.Assert.assertEquals;
-//
-// Um die Annotation @Test verwenden zu können, muss diese importiert
-// werden: import org.junit.Test;
 
 /**
- * Diese Klasse testet die Implementation des VerleihService.
+ * @author SE2-Team
  */
 public class VerleihServiceImplTest
 {
-    private Kunde _homer;
-    private Kunde _roger;
-    private Kunde _brian;
-    private KundenstammService _kundenstamm;
+    private Datum _datum;
+    private Kunde _kunde;
+    private VerleihService _service;
+    private List<Medium> _medienListe;
+    private Kunde _vormerkkunde;
 
-    private Medium _abbey;
-    private Medium _bad;
-    private Medium _shape;
-    private MedienbestandService _medienbestand;
-
-    private VerleihServiceImpl _verleihService;
-
-    public VerleihServiceImplTest()
+    @Before
+    public void setUp()
     {
-        setUpKunden();
-        setUpMedien();
-        setUpVerleihService();
-    }
+        _datum = new Datum(3, 4, 2009);
+        KundenstammService kundenstamm = new KundenstammServiceImpl(
+                new ArrayList<Kunde>());
+        _kunde = new Kunde(new Kundennummer(123456), "ich", "du");
 
-    @Test
-    // Alle Testmethoden erhalten die Annotation @Test. Dafür müssen diese nicht
-    // mehr mit test im Namen beginnen. Dies wird jedoch aus Gewohnheit
-    // oft weiter verwendet.
-    public void testKundenstamm()
-    {
-        assertTrue(_verleihService.kundeImBestand(_homer));
-        assertTrue(_verleihService.kundeImBestand(_roger));
-        assertTrue(_verleihService.kundeImBestand(_brian));
+        _vormerkkunde = new Kunde(new Kundennummer(666999), "paul", "panter");
 
-        Kunde marge = new Kunde(new Kundennummer(123459), "Marge", "Bouvier");
-        assertFalse(_verleihService.kundeImBestand(marge));
-    }
-
-    @Test
-    public void testAmAnfangIstNichtsVerliehen()
-    {
-        assertTrue(_verleihService
-            .sindAlleNichtVerliehen(_medienbestand.getMedien()));
-        for (Kunde kunde : _kundenstamm.getKunden())
-        {
-            assertTrue(_verleihService.istVerleihenMoeglich(kunde,
-                    _medienbestand.getMedien()));
-        }
-    }
-
-    @Test
-    public void testVerleiheAn()
-    {
-        Datum datum = new Datum(20, 04, 2022);
-        List<Medium> testMedien = new ArrayList<Medium>();
-        testMedien.add(_bad);
-        testMedien.add(_abbey);
-
-        _verleihService.verleiheAn(_brian, testMedien, datum);
-        assertTrue(_verleihService.istVerliehen(_bad));
-        assertTrue(_verleihService.istVerliehen(_abbey));
-        assertFalse(_verleihService.istVerliehen(_shape));
-        assertTrue(_verleihService.sindAlleVerliehen(testMedien));
-        assertEquals(_brian, _verleihService.getEntleiherFuer(_bad));
-
-    }
-
-    @Test
-    public void testNochEinTestFall2()
-    {
-    }
-
-    @Test
-    public void testNochEinTestFall3()
-    {
-    }
-
-    private void setUpKunden()
-    {
-        _homer = new Kunde(new Kundennummer(123456), "Homer", "Simpson");
-        _roger = new Kunde(new Kundennummer(123457), "Roger", "Smith");
-        _brian = new Kunde(new Kundennummer(123458), "Brian", "Griffin");
-
-        List<Kunde> testkunden = new ArrayList<Kunde>();
-        testkunden.add(_homer);
-        testkunden.add(_roger);
-        testkunden.add(_brian);
-        _kundenstamm = new KundenstammServiceImpl(testkunden);
-    }
-
-    private void setUpMedien()
-    {
-        _abbey = new CD("Abbey Road", "Meisterwerk", "Beatles", 44);
-        _bad = new CD("Bad", "not as bad as the title might suggest",
-                "Michael Jackson", 48);
-        _shape = new CD("The Colour And The Shape", "bestes Album der Gruppe",
-                "Foo Fighters", 46);
-
-        List<Medium> _medien = new ArrayList<Medium>();
-        _medien.add(_abbey);
-        _medien.add(_bad);
-        _medien.add(_shape);
-        _medienbestand = new MedienbestandServiceImpl(_medien);
-    }
-
-    private void setUpVerleihService()
-    {
-        _verleihService = new VerleihServiceImpl(_kundenstamm, _medienbestand,
+        kundenstamm.fuegeKundenEin(_kunde);
+        kundenstamm.fuegeKundenEin(_vormerkkunde);
+        MedienbestandService medienbestand = new MedienbestandServiceImpl(
+                new ArrayList<Medium>());
+        Medium medium = new CD("CD1", "baz", "foo", 123);
+        medienbestand.fuegeMediumEin(medium);
+        medium = new CD("CD2", "baz", "foo", 123);
+        medienbestand.fuegeMediumEin(medium);
+        medium = new CD("CD3", "baz", "foo", 123);
+        medienbestand.fuegeMediumEin(medium);
+        medium = new CD("CD4", "baz", "foo", 123);
+        medienbestand.fuegeMediumEin(medium);
+        _medienListe = medienbestand.getMedien();
+        _service = new VerleihServiceImpl(kundenstamm, medienbestand,
                 new ArrayList<Verleihkarte>());
     }
+
+    @Test
+    public void testeNachInitialisierungIstNichtsVerliehen() throws Exception
+    {
+        assertTrue(_service.getVerleihkarten().isEmpty());
+        assertFalse(_service.istVerliehen(_medienListe.get(0)));
+        assertFalse(_service.sindAlleVerliehen(_medienListe));
+        assertTrue(_service.sindAlleNichtVerliehen(_medienListe));
+    }
+
+    @Test
+    public void testeVerleihUndRueckgabeVonMedien() throws Exception
+    {
+        // Lege eine Liste mit nur verliehenen und eine Liste mit ausschließlich
+        // nicht verliehenen Medien an
+        List<Medium> verlieheneMedien = _medienListe.subList(0, 2);
+        List<Medium> nichtVerlieheneMedien = _medienListe.subList(2, 4);
+        _service.verleiheAn(_kunde, verlieheneMedien, _datum);
+
+        // Prüfe, ob alle sondierenden Operationen für das Vertragsmodell
+        // funktionieren
+        assertTrue(_service.istVerliehen(verlieheneMedien.get(0)));
+        assertTrue(_service.istVerliehen(verlieheneMedien.get(1)));
+        assertFalse(_service.istVerliehen(nichtVerlieheneMedien.get(0)));
+        assertFalse(_service.istVerliehen(nichtVerlieheneMedien.get(1)));
+        assertTrue(_service.sindAlleVerliehen(verlieheneMedien));
+        assertTrue(_service.sindAlleNichtVerliehen(nichtVerlieheneMedien));
+        assertFalse(_service.sindAlleNichtVerliehen(verlieheneMedien));
+        assertFalse(_service.sindAlleVerliehen(nichtVerlieheneMedien));
+        assertFalse(_service.sindAlleVerliehen(_medienListe));
+        assertFalse(_service.sindAlleNichtVerliehen(_medienListe));
+        assertTrue(_service.istVerliehenAn(_kunde, verlieheneMedien.get(0)));
+        assertTrue(_service.istVerliehenAn(_kunde, verlieheneMedien.get(1)));
+        assertFalse(_service.istVerliehenAn(_kunde,
+                nichtVerlieheneMedien.get(0)));
+        assertFalse(_service.istVerliehenAn(_kunde,
+                nichtVerlieheneMedien.get(1)));
+        assertTrue(_service.sindAlleVerliehenAn(_kunde, verlieheneMedien));
+        assertFalse(_service.sindAlleVerliehenAn(_kunde, nichtVerlieheneMedien));
+
+        // Prüfe alle sonstigen sondierenden Methoden
+        assertEquals(2, _service.getVerleihkarten().size());
+
+        _service.nimmZurueck(verlieheneMedien, _datum);
+        // Prüfe, ob alle sondierenden Operationen für das Vertragsmodell
+        // funktionieren
+        assertFalse(_service.istVerliehen(verlieheneMedien.get(0)));
+        assertFalse(_service.istVerliehen(verlieheneMedien.get(1)));
+        assertFalse(_service.istVerliehen(nichtVerlieheneMedien.get(0)));
+        assertFalse(_service.istVerliehen(nichtVerlieheneMedien.get(1)));
+        assertFalse(_service.sindAlleVerliehen(verlieheneMedien));
+        assertTrue(_service.sindAlleNichtVerliehen(nichtVerlieheneMedien));
+        assertTrue(_service.sindAlleNichtVerliehen(verlieheneMedien));
+        assertFalse(_service.sindAlleVerliehen(nichtVerlieheneMedien));
+        assertFalse(_service.sindAlleVerliehen(_medienListe));
+        assertTrue(_service.sindAlleNichtVerliehen(_medienListe));
+        assertTrue(_service.getVerleihkarten().isEmpty());
+    }
+
+    @Test
+    public void testVerleihEreignisBeobachter() throws ProtokollierException
+    {
+        final boolean ereignisse[] = new boolean[1];
+        ereignisse[0] = false;
+        ServiceObserver beobachter = new ServiceObserver()
+        {
+            @Override
+            public void informiereUeberAenderung()
+            {
+                ereignisse[0] = true;
+            }
+        };
+        _service.verleiheAn(_kunde,
+                Collections.singletonList(_medienListe.get(0)), _datum);
+        assertFalse(ereignisse[0]);
+
+        _service.registriereBeobachter(beobachter);
+        _service.verleiheAn(_kunde,
+                Collections.singletonList(_medienListe.get(1)), _datum);
+        assertTrue(ereignisse[0]);
+
+        _service.entferneBeobachter(beobachter);
+        ereignisse[0] = false;
+        _service.verleiheAn(_kunde,
+                Collections.singletonList(_medienListe.get(2)), _datum);
+        assertFalse(ereignisse[0]);
+    }
+
 }

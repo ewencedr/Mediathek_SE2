@@ -13,7 +13,7 @@ import javax.swing.JSplitPane;
  * einen Medienauflister, einen Medienanzeiger und einen Ausleihbutton.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class AusleiheUI
 {

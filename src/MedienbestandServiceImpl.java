@@ -8,10 +8,10 @@ import java.util.List;
  * z.B. die gleiche CD mehrfach vorhanden sein.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-class MedienbestandServiceImpl extends AbstractObservableService
-        implements MedienbestandService
+class MedienbestandServiceImpl extends AbstractObservableService implements
+        MedienbestandService
 {
 
     /**
@@ -23,19 +23,19 @@ class MedienbestandServiceImpl extends AbstractObservableService
      * Initialisiert einen neuen Medienbestand.
      * 
      * @param medien Der initiale Medienbestand.
+     * 
+     * @require medien != null
      */
     public MedienbestandServiceImpl(List<Medium> medien)
     {
+        assert medien != null : "Vorbedingung verletzt: medien != null";
         _medienbestand = new ArrayList<Medium>(medien);
     }
 
     @Override
     public void entferneMedium(Medium medium)
     {
-        assert medium != null : "Vorbedingung verletzt: Kein Medium";
-        assert enthaeltMedium(
-                medium) : "Vorbedingung verletzt: Kein Medium im Bestand";
-
+        assert enthaeltMedium(medium) : "Vorbedingung verletzt: enthaeltMedium(medium)";
         _medienbestand.remove(medium);
 
         informiereUeberAenderung();
@@ -44,17 +44,14 @@ class MedienbestandServiceImpl extends AbstractObservableService
     @Override
     public boolean enthaeltMedium(Medium medium)
     {
-
-        assert medium != null : "Vorbedingung verletzt: Kein Medium";
-
+        assert medium != null : "Vorbedingung verletzt: medium != null";
         return _medienbestand.contains(medium);
     }
 
     @Override
     public void fuegeMediumEin(Medium neuesMedium)
     {
-        assert neuesMedium != null : "Vorbedingung verletzt: Kein Medium";
-
+        assert !enthaeltMedium(neuesMedium) : "Vorbedingung verletzt: !enthaeltMedium(medium)";
         _medienbestand.add(neuesMedium);
 
         informiereUeberAenderung();

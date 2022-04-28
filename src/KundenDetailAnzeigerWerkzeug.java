@@ -6,7 +6,7 @@ import javax.swing.JTextArea;
  * anzuzeigen.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class KundenDetailAnzeigerWerkzeug
 {
@@ -32,7 +32,7 @@ class KundenDetailAnzeigerWerkzeug
         selectedKundenTextArea.setText("");
         if (kunde != null)
         {
-            selectedKundenTextArea.append(kunde.toString());
+            selectedKundenTextArea.append(kunde.getFormatiertenString());
         }
     }
 

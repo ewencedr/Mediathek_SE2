@@ -9,9 +9,9 @@ import java.util.TimeZone;
  * bilden.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public final class Datum implements Comparable<Datum>
+final class Datum implements Comparable<Datum>
 {
     // Dieses Calendar-Exemplar wird für die Gültigkeitsprüfung verwendet.
     private static final Calendar CALENDAR = Calendar.getInstance();

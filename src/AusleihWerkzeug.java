@@ -9,13 +9,13 @@ import javax.swing.JPanel;
  * Benutzungsoberfläche bereit. Die UI wird durch die {@link AusleiheUI} gestaltet.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class AusleihWerkzeug
 {
 
     /**
-     * Die UI-Komponente der Ausleihe
+     * Die UI-Komponente der Ausleihe.
      */
     private final AusleiheUI _ausleiheUI;
 
@@ -209,10 +209,11 @@ class AusleihWerkzeug
      */
     private void leiheAusgewaehlteMedienAus()
     {
-        List<Medium> medien = _medienAuflisterWerkzeug.getSelectedMedien();
+        List<Medium> selectedMedien = _medienAuflisterWerkzeug
+            .getSelectedMedien();
         Kunde selectedKunde = _kundenAuflisterWerkzeug.getSelectedKunde();
         Datum heute = Datum.heute();
-        _verleihService.verleiheAn(selectedKunde, medien, heute);
+        _verleihService.verleiheAn(selectedKunde, selectedMedien, heute);
     }
 
     /**

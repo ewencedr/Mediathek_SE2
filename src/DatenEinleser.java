@@ -9,7 +9,7 @@ import java.util.Map.Entry;
  * einzulesen.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class DatenEinleser
 {
@@ -75,8 +75,8 @@ class DatenEinleser
         KundenEinleser kundenEinleser = new KundenEinleser();
         _kunden = kundenEinleser.leseKundenEin(_kundenDatei);
         MedienEinleser medienEinleser = new MedienEinleser();
-        Map<Medium, Verleihkarte> medienMap = medienEinleser
-            .leseMedienEin(_kunden, _medienDatei);
+        Map<Medium, Verleihkarte> medienMap = medienEinleser.leseMedienEin(
+                _kunden, _medienDatei);
         _medien = new ArrayList<Medium>(medienMap.keySet());
         _verleihkarten = new ArrayList<Verleihkarte>();
         for (Entry<Medium, Verleihkarte> entry : medienMap.entrySet())

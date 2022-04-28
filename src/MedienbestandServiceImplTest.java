@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class MedienbestandServiceImplTest
@@ -16,7 +17,8 @@ public class MedienbestandServiceImplTest
 
     private MedienbestandService _medienbestand;
 
-    public MedienbestandServiceImplTest()
+    @Before
+    public void setUp()
     {
         _medienbestand = new MedienbestandServiceImpl(new ArrayList<Medium>());
         _cd1 = new CD("Mein CD1-Titel", "Mein CD1-Kommentar",
@@ -28,35 +30,28 @@ public class MedienbestandServiceImplTest
     @Test
     public void entferneMediumTest()
     {
-        assertTrue(_medienbestand.getMedien()
-            .isEmpty());
+        assertTrue(_medienbestand.getMedien().isEmpty());
         _medienbestand.fuegeMediumEin(_cd1);
         _medienbestand.fuegeMediumEin(_cd2);
 
         _medienbestand.entferneMedium(_cd1);
-        assertEquals(1, _medienbestand.getMedien()
-            .size());
+        assertEquals(1, _medienbestand.getMedien().size());
 
-        assertFalse(_medienbestand.getMedien()
-            .contains(_cd1));
-        assertTrue(_medienbestand.getMedien()
-            .contains(_cd2));
+        assertFalse(_medienbestand.getMedien().contains(_cd1));
+        assertTrue(_medienbestand.getMedien().contains(_cd2));
 
         _medienbestand.entferneMedium(_cd2);
-        assertTrue(_medienbestand.getMedien()
-            .isEmpty());
+        assertTrue(_medienbestand.getMedien().isEmpty());
     }
 
     @Test
     public void enthaeltMediumTest()
     {
-        assertTrue(_medienbestand.getMedien()
-            .isEmpty());
+        assertTrue(_medienbestand.getMedien().isEmpty());
         _medienbestand.fuegeMediumEin(_cd1);
         _medienbestand.fuegeMediumEin(_cd2);
 
-        assertEquals(2, _medienbestand.getMedien()
-            .size());
+        assertEquals(2, _medienbestand.getMedien().size());
 
         List<Medium> medien = _medienbestand.getMedien();
         boolean medienbestandEnthaeltCD1 = false;
@@ -85,18 +80,14 @@ public class MedienbestandServiceImplTest
     @Test
     public void fuegeMediumEinTest()
     {
-        assertTrue(_medienbestand.getMedien()
-            .isEmpty());
+        assertTrue(_medienbestand.getMedien().isEmpty());
         _medienbestand.fuegeMediumEin(_cd1);
-        assertFalse(_medienbestand.getMedien()
-            .isEmpty());
-        assertEquals(1, _medienbestand.getMedien()
-            .size());
+        assertFalse(_medienbestand.getMedien().isEmpty());
+        assertEquals(1, _medienbestand.getMedien().size());
         assertTrue(_medienbestand.enthaeltMedium(_cd1));
 
         _medienbestand.fuegeMediumEin(_cd2);
-        assertEquals(2, _medienbestand.getMedien()
-            .size());
+        assertEquals(2, _medienbestand.getMedien().size());
         assertTrue(_medienbestand.enthaeltMedium(_cd2));
     }
 }

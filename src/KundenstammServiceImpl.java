@@ -6,7 +6,7 @@ import java.util.List;
  * Kunden kann über ihre {@link Kundennummer} zugegriffen werden.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class KundenstammServiceImpl extends AbstractObservableService implements
         KundenstammService

@@ -13,20 +13,24 @@ import javax.swing.WindowConstants;
  * Das Hauptfenster für die Anwendung
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MediathekUI
 {
     // Die Bezeichner der Buttons, werden auch als Schlüssel für das CardLayout
     // verwendet.
     public static final String AUSLEIHE = "Ausleihe-Ansicht";
-    public static final String NAME = "SE2-Mediathek Blatt 01-03";
+    public static final String RUECKGABE = "Rückgabe-Ansicht";
+    public static final String NAME = "SE2-Mediathek Blatt 04-05";
 
     private JButton _ausleiheButton;
     private JPanel _ausleihePanel;
     private JPanel _menuPanel;
     private CardLayout _anzeigeLayout;
     private JPanel _anzeigePanel;
+
+    private JButton _rueckgabeButton;
+    private JPanel _rueckgabePanel;
 
     private JPanel _spacerPanel;
     private JLabel _titelLabel;
@@ -41,10 +45,12 @@ class MediathekUI
      * 
      * @require ausleihePanel != null
      */
-    public MediathekUI(JPanel ausleihePanel)
+    public MediathekUI(JPanel ausleihePanel, JPanel rueckgabePanel)
     {
         assert ausleihePanel != null : "Vorbedingung verletzt: ausleihePanel != null";
+        assert rueckgabePanel != null : "Vorbedingung verletzt: rueckgabePanel != null";
         _ausleihePanel = ausleihePanel;
+        _rueckgabePanel = rueckgabePanel;
         initGUI();
     }
 
@@ -64,8 +70,8 @@ class MediathekUI
         // Beim CardLayout wird jeweils das Widget und ein Schlüssel übergeben.
         // Beispiel: Widget = _ausleihePanel. Schlüssel = AUSLEIHE.
         _anzeigePanel.add(_ausleihePanel, AUSLEIHE);
-        _frame.getContentPane()
-            .add(_anzeigePanel, BorderLayout.CENTER);
+        _anzeigePanel.add(_rueckgabePanel, RUECKGABE);
+        _frame.getContentPane().add(_anzeigePanel, BorderLayout.CENTER);
     }
 
     /**
@@ -79,6 +85,15 @@ class MediathekUI
     }
 
     /**
+     * Erzeugt den Rückgabe-Button für das Menü.
+     */
+    private void erzeugeRueckgabeButton()
+    {
+        _rueckgabeButton = new JButton();
+        initialisiereMenuButton(_rueckgabeButton, RUECKGABE);
+    }
+
+    /**
      * Erzeugt das Menü mit Ausleih- und Rückgabe-Button und Titel.
      */
     private void erzeugeMenuPanel()
@@ -87,10 +102,10 @@ class MediathekUI
         FlowLayout auswahlPanelLayout = new FlowLayout();
         auswahlPanelLayout.setAlignment(FlowLayout.LEFT);
         _menuPanel.setLayout(auswahlPanelLayout);
-        _frame.getContentPane()
-            .add(_menuPanel, BorderLayout.NORTH);
+        _frame.getContentPane().add(_menuPanel, BorderLayout.NORTH);
         _menuPanel.setBackground(UIConstants.BACKGROUND_COLOR);
         erzeugeAusleiheButton();
+        erzeugeRueckgabeButton();
         erzeugeTitel();
     }
 
@@ -135,8 +150,7 @@ class MediathekUI
     {
         _frame = new JFrame(NAME);
         _frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        _frame.getContentPane()
-            .setBackground(UIConstants.BACKGROUND_COLOR);
+        _frame.getContentPane().setBackground(UIConstants.BACKGROUND_COLOR);
         _frame.setTitle(NAME);
         erzeugeAnzeigePanel();
         erzeugeMenuPanel();
@@ -171,10 +185,15 @@ class MediathekUI
             buttonToSelect = getAusleiheButton();
             buttonToDeselect = getSelectedButton();
         }
+        else if (werkzeugName.equals(RUECKGABE))
+        {
+            buttonToSelect = getRueckgabeButton();
+            buttonToDeselect = getSelectedButton();
+        }
         else
         {
-            throw new IllegalArgumentException(
-                    "Werkzeugname unbekannt: " + werkzeugName);
+            throw new IllegalArgumentException("Werkzeugname unbekannt: "
+                    + werkzeugName);
         }
         buttonToDeselect.setSelected(false);
         buttonToDeselect.setBackground(UIConstants.BUTTON_COLOR);
@@ -218,6 +237,16 @@ class MediathekUI
     }
 
     /**
+     * Gibt den Rueckgabe-Button zurück.
+     * 
+     * @return Den Rueckgabe-Button.
+     */
+    public JButton getRueckgabeButton()
+    {
+        return _rueckgabeButton;
+    }
+
+    /**
      * Gibt das JFrame der UI zurück.
      * 
      * @return Das JFrame der UI.
@@ -233,6 +262,14 @@ class MediathekUI
     public void zeigeAusleihe()
     {
         zeigeAn(MediathekUI.AUSLEIHE);
+    }
+
+    /**
+     * Zeigt die Rückgabe-Sicht
+     */
+    public void zeigeRueckgabe()
+    {
+        zeigeAn(MediathekUI.RUECKGABE);
     }
 
     /**

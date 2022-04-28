@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -16,7 +17,8 @@ public class KundenComparatorTest
     private Kunde _kunde2;
     private Kunde _kunde3;
 
-    public KundenComparatorTest()
+    @Before
+    public void setUp()
     {
         _kunde1 = new Kunde(new Kundennummer(111111), "Hans", "Meier");
         _kunde2 = new Kunde(new Kundennummer(543453), "Heidi", "Klum");

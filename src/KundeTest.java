@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class KundeTest
@@ -13,7 +14,7 @@ public class KundeTest
         Kundennummer kundennummer1 = new Kundennummer(123456);
         Kundennummer kundennummer2 = new Kundennummer(654321);
 
-        assertEquals(kunde.getKundennummer(), kundennummer1);
+        assertEquals(kundennummer1, kunde.getKundennummer());
         assertNotSame(kundennummer2, kunde.getKundennummer());
     }
 
@@ -64,7 +65,8 @@ public class KundeTest
         assertNotSame(telNr2, kunde.getTelefonnummer());
     }
 
-    public KundeTest()
+    @Before
+    public void setUp()
     {
         kunde = new Kunde(new Kundennummer(123456), "Klaus", "Schmidt");
         kunde.setPLZ(new PLZ("22761"));

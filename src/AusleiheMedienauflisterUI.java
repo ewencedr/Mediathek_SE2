@@ -12,10 +12,10 @@ import javax.swing.table.TableColumn;
 
 /**
  * AusleiheMedienauflisterUI beschreibt die grafische Benutzungsoberfläche für
- * das AusleiheMedienauflisterWerkzeug.
+ * das {@link AusleiheMedienauflisterWerkzeug}.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class AusleiheMedienauflisterUI
 {

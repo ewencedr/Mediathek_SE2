@@ -6,9 +6,9 @@ import javax.swing.SwingUtilities;
  * Startet die Hauptanwendung mit grafischer Oberfläche.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-class StartUpMediathek_Blatt_01_03
+class StartUpMediathek_Blatt_04_05
 {
 
     private static final File KUNDEN_DATEI = new File(
@@ -25,7 +25,7 @@ class StartUpMediathek_Blatt_01_03
      */
     public static void main(String[] args)
     {
-        pruefeObAssertionsAktiviert();
+    	pruefeObAssertionsAktiviert();
         erstelleServices();
 
         final MediathekWerkzeug mediathekWerkzeug = new MediathekWerkzeug(
@@ -54,8 +54,7 @@ class StartUpMediathek_Blatt_01_03
             datenEinleser.leseDaten();
             _medienbestand = new MedienbestandServiceImpl(
                     datenEinleser.getMedien());
-            _kundenstamm = new KundenstammServiceImpl(
-                    datenEinleser.getKunden());
+            _kundenstamm = new KundenstammServiceImpl(datenEinleser.getKunden());
             _verleihService = new VerleihServiceImpl(_kundenstamm,
                     _medienbestand, datenEinleser.getVerleihkarten());
         }
@@ -64,20 +63,19 @@ class StartUpMediathek_Blatt_01_03
             e.printStackTrace();
         }
     }
-
+    
     /**
-     * prueft, ob -ea als Default VM Argument hinterlegt ist
-     */
-    private static void pruefeObAssertionsAktiviert()
-    {
+	 * prueft, ob -ea als Default VM Argument hinterlegt ist
+	 */
+	private static void pruefeObAssertionsAktiviert() {
 
-        boolean sindAssertionsAktiv = false;
-        assert sindAssertionsAktiv = true;
-        if (!sindAssertionsAktiv)
-        {
-            System.err.println("Assertions sind nicht eingeschaltet!\n"
-                    + " Schalte sie ein, indem du unter Window -> Preferences-> Java -> installed JREs das genutzte JRE anwähltst, auf Edit klickst und bei Default VM Arguments \"-ea\" einträgst.");
-        }
-    }
+		boolean sindAssertionsAktiv = false;
+		assert sindAssertionsAktiv = true;
+		if(!sindAssertionsAktiv)
+		{
+			System.err.println("Assertions sind nicht eingeschaltet!\n"
+					+ " Schalte sie ein, indem du unter Window -> Preferences-> Java -> installed JREs das genutzte JRE anwähltst, auf Edit klickst und bei Default VM Arguments \"-ea\" einträgst.");
+		}
+	}
 
 }

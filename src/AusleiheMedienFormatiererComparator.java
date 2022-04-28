@@ -6,10 +6,10 @@ import java.util.Comparator;
  * sortiert angezeigt werden können.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-class AusleiheMedienFormatiererComparator
-        implements Comparator<AusleiheMedienFormatierer>, Serializable
+class AusleiheMedienFormatiererComparator implements
+        Comparator<AusleiheMedienFormatierer>, Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -31,12 +31,11 @@ class AusleiheMedienFormatiererComparator
         {
             Medium medium1 = mediumFormatierer1.getMedium();
             Medium medium2 = mediumFormatierer2.getMedium();
-            result = medium1.getMedienBezeichnung()
-                .compareTo(medium2.getMedienBezeichnung());
+            result = medium1.getMedienBezeichnung().compareTo(
+                    medium2.getMedienBezeichnung());
             if (result == 0)
             {
-                result = medium1.getTitel()
-                    .compareTo(medium2.getTitel());
+                result = medium1.getTitel().compareTo(medium2.getTitel());
             }
         }
         return result;

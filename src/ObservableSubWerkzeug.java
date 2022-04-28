@@ -17,9 +17,9 @@ import java.util.Set;
  * Diese Klasse entspricht der Klasse "Beobachtbar" im Beobachter-Muster.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public abstract class ObservableSubWerkzeug
+abstract class ObservableSubWerkzeug
 {
     private Set<SubWerkzeugObserver> _alleBeobachter;
 

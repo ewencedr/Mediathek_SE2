@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * KonsolenVideospiele und PCVideospiele einlesen.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MedienEinleser
 {
@@ -209,16 +209,34 @@ class MedienEinleser
         }
         else if (medienBezeichnung.equals("DVD"))
         {
-            String regisseuer = naechsterToken(tokenizer);
+            String regisseur = naechsterToken(tokenizer);
             int laufzeit = Integer.valueOf(naechsterToken(tokenizer));
 
-            medium = new DVD(titel, kommentar, regisseuer, laufzeit);
+            medium = new DVD(titel, kommentar, regisseur, laufzeit);
         }
+        // todo für Aufgabe 4.3.4: Kommentarzeichen entfernen um PC- und
+        // Konsolenvideospiele in der Mediathek zu haben.
+        // else if (medienBezeichnung.equals("KonsolenVideospiel")
+        // || medienBezeichnung.equals("PCVideospiel"))
+        // {
+        // String system = naechsterToken(tokenizer);
+        //
+        // if (medienBezeichnung.equals("KonsolenVideospiel"))
+        // {
+        // medium = new KonsolenVideospiel(titel, kommentar, system);
+        // }
+        // else if (medienBezeichnung.equals("PCVideospiel"))
+        // {
+        // medium = new PCVideospiel(titel, kommentar, system);
+        // }
+        // }
+        // todo für Aufgabe 4.3.4: Diesen else-Zweig auskommentieren, sobald PC-
+        // und Konsolenvideospiele existieren.
         else if (medienBezeichnung.equals("Videospiel"))
         {
             String system = naechsterToken(tokenizer);
 
-            // medium = new Videospiel(titel, kommentar, system);
+            medium = new Videospiel(titel, kommentar, system);
         }
         return medium;
     }

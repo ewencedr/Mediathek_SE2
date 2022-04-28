@@ -14,9 +14,9 @@
  * Diese Klasse entspricht der Klasse "Beobachtbar" im Beobachter-Muster.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public interface SubWerkzeugObserver
+interface SubWerkzeugObserver
 {
     /**
      * Benachrichtigt diesen Beobachter bei einer Änderung in dem beobachteten

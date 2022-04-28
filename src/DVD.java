@@ -3,7 +3,7 @@
  * {@link Medium}s erfasst sie Informationen zum Regisseur und zur Laufzeit.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  * 
  */
 class DVD implements Medium
@@ -71,6 +71,20 @@ class DVD implements Medium
         return _laufzeit;
     }
 
+    /**
+     * Ändert die Laufzeit der DVD
+     * 
+     * @param laufzeit Die Laufzeit der DVD in Minuten.
+     * 
+     * @require laufzeit > 0
+     * @ensure getLaufzeit() == laufzeit
+     */
+    public void setLaufzeit(int laufzeit)
+    {
+        assert laufzeit > 0 : "Vorbedingung verletzt: laufzeit > 0";
+        _laufzeit = laufzeit;
+    }
+
     @Override
     public String getMedienBezeichnung()
     {
@@ -89,6 +103,20 @@ class DVD implements Medium
         return _regisseur;
     }
 
+    /**
+     * Ändert den Regisseur der DVD
+     * 
+     * @param regisseur Der Regisseur der DVD.
+     * 
+     * @require regisseur != null
+     * @ensure getRegisseur() == regisseur
+     */
+    public void setRegisseur(String regisseur)
+    {
+        assert regisseur != null : "Vorbedingung verletzt: regisseur != null";
+        _regisseur = regisseur;
+    }
+
     @Override
     public String getKommentar()
     {
@@ -96,9 +124,32 @@ class DVD implements Medium
     }
 
     @Override
+    public void setKommentar(String kommentar)
+    {
+        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
+        _kommentar = kommentar;
+    }
+
+    @Override
     public String getTitel()
     {
         return _titel;
+    }
+
+    @Override
+    public void setTitel(String titel)
+    {
+        assert titel != null : "Vorbedingung verletzt: titel != null";
+        _titel = titel;
+    }
+
+    @Override
+    public String getFormatiertenString()
+    {
+        return getMedienBezeichnung() + ":\n" + "    " + "Titel: " + _titel
+                + "\n" + "    " + "Kommentar: " + _kommentar + "\n" + "    "
+                + "Regisseur: " + _regisseur + "\n" + "    " + "Laufzeit: "
+                + _laufzeit + "\n";
     }
 
 }

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
  * Das Gesamtwerkzeug der Mediathek, das die anderen Werkzeuge zusammenfasst.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MediathekWerkzeug
 {
@@ -35,6 +35,11 @@ class MediathekWerkzeug
     private final AusleihWerkzeug _ausleihWerkzeug;
 
     /**
+     * Das RueckgabeWerkzeug.
+     */
+    private final RueckgabeWerkzeug _rueckgabeWerkzeug;
+
+    /**
      * Initialisiert ein neues MediathekWerkzeug.
      * 
      * @param medienbestand der Medienbestand
@@ -59,9 +64,11 @@ class MediathekWerkzeug
         // Erzeuge Subwerkzeuge
         _ausleihWerkzeug = new AusleihWerkzeug(_medienbestand, _kundenstamm,
                 _verleihService);
+        _rueckgabeWerkzeug = new RueckgabeWerkzeug(_verleihService);
 
         // Erzeuge UI für dieses Werkzeug
-        _mediathekUI = new MediathekUI(_ausleihWerkzeug.getUIPanel());
+        _mediathekUI = new MediathekUI(_ausleihWerkzeug.getUIPanel(),
+                _rueckgabeWerkzeug.getUIPanel());
 
         registriereUIAktionen();
     }
@@ -73,6 +80,7 @@ class MediathekWerkzeug
     private void registriereUIAktionen()
     {
         registriereZeigeAusleiheAktion();
+        registriereZeigeRueckgabeAktion();
     }
 
     /**
@@ -80,15 +88,31 @@ class MediathekWerkzeug
      */
     private void registriereZeigeAusleiheAktion()
     {
-        _mediathekUI.getAusleiheButton()
-            .addActionListener(new ActionListener()
+        _mediathekUI.getAusleiheButton().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                _mediathekUI.zeigeAusleihe();
+            }
+        });
+    }
+
+    /**
+     * Registriert die Aktion, die ausgeführt wird, um die Rueckgabe anzuzeigen.
+     */
+    private void registriereZeigeRueckgabeAktion()
+    {
+        _mediathekUI.getRueckgabeButton().addActionListener(
+                new ActionListener()
                 {
-                    _mediathekUI.zeigeAusleihe();
-                }
-            });
+
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        _mediathekUI.zeigeRueckgabe();
+                    }
+                });
     }
 
     /**

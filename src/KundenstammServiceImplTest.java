@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class KundenstammServiceImplTest
@@ -15,7 +16,8 @@ public class KundenstammServiceImplTest
     private Kunde _klaus;
     private Kunde _susi;
 
-    public KundenstammServiceImplTest()
+    @Before
+    public void setUp()
     {
         _kundenstamm = new KundenstammServiceImpl(new ArrayList<Kunde>());
         _klaus = new Kunde(new Kundennummer(123456), "Klaus", "Schmidt");
@@ -25,8 +27,7 @@ public class KundenstammServiceImplTest
     @Test
     public void testEntferneKunde()
     {
-        assertTrue(_kundenstamm.getKunden()
-            .isEmpty());
+        assertTrue(_kundenstamm.getKunden().isEmpty());
         _kundenstamm.fuegeKundenEin(_klaus);
         _kundenstamm.fuegeKundenEin(_susi);
 
@@ -51,8 +52,7 @@ public class KundenstammServiceImplTest
     @Test
     public void testEnthaeltKunden()
     {
-        assertTrue(_kundenstamm.getKunden()
-            .isEmpty());
+        assertTrue(_kundenstamm.getKunden().isEmpty());
         _kundenstamm.fuegeKundenEin(_klaus);
         assertTrue(_kundenstamm.enthaeltKunden(_klaus));
 
@@ -70,8 +70,7 @@ public class KundenstammServiceImplTest
     public void testFuegeKundeEin()
     {
 
-        assertTrue(_kundenstamm.getKunden()
-            .isEmpty());
+        assertTrue(_kundenstamm.getKunden().isEmpty());
 
         _kundenstamm.fuegeKundenEin(_klaus);
         assertTrue(_kundenstamm.enthaeltKunden(_klaus));
@@ -83,24 +82,20 @@ public class KundenstammServiceImplTest
     @Test
     public void testgetKunden()
     {
-        assertTrue(_kundenstamm.getKunden()
-            .isEmpty());
+        assertTrue(_kundenstamm.getKunden().isEmpty());
         _kundenstamm.fuegeKundenEin(_klaus);
-        assertEquals(1, _kundenstamm.getKunden()
-            .size());
+        assertEquals(1, _kundenstamm.getKunden().size());
         assertTrue(_kundenstamm.enthaeltKunden(_klaus));
 
         _kundenstamm.fuegeKundenEin(_susi);
-        assertEquals(2, _kundenstamm.getKunden()
-            .size());
+        assertEquals(2, _kundenstamm.getKunden().size());
         assertTrue(_kundenstamm.enthaeltKunden(_susi));
     }
 
     @Test
     public void testgetKundenFuerKundennummer()
     {
-        assertTrue(_kundenstamm.getKunden()
-            .isEmpty());
+        assertTrue(_kundenstamm.getKunden().isEmpty());
         _kundenstamm.fuegeKundenEin(_klaus);
         _kundenstamm.fuegeKundenEin(_susi);
 

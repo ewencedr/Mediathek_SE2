@@ -3,9 +3,9 @@
  * Abmelden von Beobachtern.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public interface ObservableService
+interface ObservableService
 {
 
     /**

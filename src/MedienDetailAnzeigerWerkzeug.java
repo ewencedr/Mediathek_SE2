@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
  * anzuzeigen.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class MedienDetailAnzeigerWerkzeug
 {
@@ -33,8 +33,12 @@ class MedienDetailAnzeigerWerkzeug
     {
         assert medien != null : "Vorbedingung verletzt: (medien != null)";
         JTextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
-        // TODO Aufgabe 3.4.2 Die Mediendetails sollen angezeigt werden
         selectedMedienTextArea.setText("");
+        for (Medium medium : medien)
+        {
+            selectedMedienTextArea.append(medium.getFormatiertenString());
+            selectedMedienTextArea.append("--------------- \n");
+        }
     }
 
     /**

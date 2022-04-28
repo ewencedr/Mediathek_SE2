@@ -6,7 +6,7 @@ import java.util.List;
  * Verwaltung und Benachrichtigung der Beobachter bereitstellt.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 abstract class AbstractObservableService implements ObservableService
 {

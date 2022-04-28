@@ -1,9 +1,9 @@
 /**
- * Eine CD ist ein {@link Medium}. Zusätzlich zu den Eigenschaften eines Mediums erfasst
+ * Eine CD ist ein Medium. Zusätzlich zu den Eigenschaften eines Mediums erfasst
  * sie Informationen zu Spiellänge und Interpret.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class CD implements Medium
 {
@@ -70,6 +70,20 @@ class CD implements Medium
         return _interpret;
     }
 
+    /**
+     * Ändert den Interpreten
+     * 
+     * @param interpret Der Interpret des Mediums
+     * 
+     * @require interpret != null
+     * @ensure getInterpret() == interpret
+     */
+    public void setInterpret(String interpret)
+    {
+        assert interpret != null : "Vorbedingung verletzt: interpret != null";
+        _interpret = interpret;
+    }
+
     @Override
     public String getMedienBezeichnung()
     {
@@ -88,10 +102,31 @@ class CD implements Medium
         return _spiellaenge;
     }
 
+    /**
+     * Ändert die Spiellänge
+     * 
+     * @param spiellaenge Spiellänge des Medium
+     * 
+     * @require spiellaenge > 0
+     * @ensure getSpielaenge() == spiellaenge
+     */
+    public void setSpiellaenge(int spiellaenge)
+    {
+        assert spiellaenge > 0 : "Vorbedingung verletzt: spiellaenge > 0";
+        _spiellaenge = spiellaenge;
+    }
+
     @Override
     public String getKommentar()
     {
         return _kommentar;
+    }
+
+    @Override
+    public void setKommentar(String kommentar)
+    {
+        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
+        _kommentar = kommentar;
     }
 
     @Override
@@ -100,4 +135,19 @@ class CD implements Medium
         return _titel;
     }
 
+    @Override
+    public void setTitel(String titel)
+    {
+        assert titel != null : "Vorbedingung verletzt: titel != null";
+        _titel = titel;
+    }
+
+    @Override
+    public String getFormatiertenString()
+    {
+        return getMedienBezeichnung() + ":\n" + "    " + "Titel: " + _titel
+                + "\n" + "    " + "Kommentar: " + _kommentar + "\n" + "    "
+                + "Interpret: " + _interpret + "\n" + "    " + "Spiellänge: "
+                + _spiellaenge + "\n";
+    }
 }

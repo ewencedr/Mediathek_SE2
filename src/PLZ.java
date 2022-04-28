@@ -2,15 +2,15 @@
  * PLZ ist eine Postleitzahl mit einer Länge von 5 Zeichen.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-class PLZ
+final class PLZ
 {
     // die Postleitzahl als Stringrepräsentation (z.B. 22761)
     private final String _plz;
 
     /**
-     * Wählt eine PLZ aus.
+     * Wählt eine PLZBlatt2 aus.
      * 
      * @param plz Die Postleitzahl als String.
      * 
@@ -23,7 +23,7 @@ class PLZ
     }
 
     /**
-     * Liefert true, wenn die Postleitzahl 5 Zeichen hat, andernfalls false.
+     * Liefert true, wenn die Postleitzahl 5 Zeichen, andernfalls false.
      * 
      * @param plz Eine Postleitzahl zur Überprüfung
      * @return true, wenn die Postleitzahl 5 Zeichen hat, andernfalls false.
@@ -35,7 +35,7 @@ class PLZ
 
     /**
      * Zwei Postleitzahlen sind gleich wenn ihre Ziffernkombinationen gleich
-     * sind.
+     * sind. Ein eventuelles Prefix wird nicht überprüft.
      * 
      * @param obj Ein anderes Objekt.
      * @return true, wenn die die ziffernkombinationen gleich sind, ansonsten

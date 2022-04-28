@@ -4,10 +4,13 @@
  * {@link Kundennummer}.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class Kunde
 {
+    // 4 Leerzeichen für formatierte Strings
+    private static final String SPACE = "    ";
+
     // Zustandsfelder für Kundendaten
     private Kundennummer _kundennummer;
     private String _nachname;
@@ -42,6 +45,22 @@ class Kunde
         _nachname = nachname;
         _kundennummer = kundennummer;
 
+    }
+
+    /**
+     * Gibt einen String mit allen Informationen zum Kunden zurück.
+     * 
+     * @return einen formatierten String mit allen Informationen zum Kunden.
+     *         Enthält Zeilenumbrüche.
+     */
+    public String getFormatiertenString()
+    {
+        String result = SPACE + "Kundennummer: " + getKundennummer().toString()
+                + "\n";
+        result += SPACE + "Name: " + getVorname() + " " + getNachname() + "\n";
+        result += SPACE + "Telefon: " + getTelefonnummer() + "\n";
+        result += SPACE + "Anschrift:\n" + getAnschrift() + "\n";
+        return result;
     }
 
     /**
@@ -166,4 +185,39 @@ class Kunde
         _wohnort = wohnort;
     }
 
+    @Override
+    public String toString()
+    {
+        return getFormatiertenString();
+    }
+
+    /**
+     * Gibt eine String-Darstellung der Anschrift des Kundens (ohne
+     * Zeilenumbrüche) zurück.
+     * 
+     * @return Eine String-Repräsentation der Anschrift ohne Zeilenumbrüche.
+     * 
+     * @ensure result != null
+     */
+    private String getAnschrift()
+    {
+        String result = "";
+        if ((getStrasse() != null))
+        {
+            result += SPACE + getStrasse() + "\n";
+        }
+        if (getPLZ() != null)
+        {
+            result += SPACE + getPLZ() + " ";
+        }
+        if (getWohnort() != null)
+        {
+            result += getWohnort();
+        }
+        if (result.length() == 0)
+        {
+            result += SPACE + "unbekannt";
+        }
+        return result;
+    }
 }

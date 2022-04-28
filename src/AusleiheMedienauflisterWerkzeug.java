@@ -13,7 +13,7 @@ import javax.swing.event.ListSelectionListener;
  * in der Medienliste ändert.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class AusleiheMedienauflisterWerkzeug extends ObservableSubWerkzeug
 {
@@ -71,11 +71,10 @@ class AusleiheMedienauflisterWerkzeug extends ObservableSubWerkzeug
         for (Medium medium : medienListe)
         {
             boolean istVerliehen = _verleihService.istVerliehen(medium);
-            medienFormatierer
-                .add(new AusleiheMedienFormatierer(medium, istVerliehen));
+            medienFormatierer.add(new AusleiheMedienFormatierer(medium,
+                    istVerliehen, null));
         }
-        _ui.getMedienAuflisterTableModel()
-            .setMedien(medienFormatierer);
+        _ui.getMedienAuflisterTableModel().setMedien(medienFormatierer);
     }
 
     /**
@@ -84,16 +83,15 @@ class AusleiheMedienauflisterWerkzeug extends ObservableSubWerkzeug
      */
     private void registriereMedienAnzeigenAktion()
     {
-        _ui.getMedienAuflisterTable()
-            .getSelectionModel()
-            .addListSelectionListener(new ListSelectionListener()
-            {
-                @Override
-                public void valueChanged(ListSelectionEvent e)
+        _ui.getMedienAuflisterTable().getSelectionModel()
+                .addListSelectionListener(new ListSelectionListener()
                 {
-                    informiereUeberAenderung();
-                }
-            });
+                    @Override
+                    public void valueChanged(ListSelectionEvent e)
+                    {
+                        informiereUeberAenderung();
+                    }
+                });
     }
 
     /**
@@ -125,16 +123,15 @@ class AusleiheMedienauflisterWerkzeug extends ObservableSubWerkzeug
     public List<Medium> getSelectedMedien()
     {
         List<Medium> result = new ArrayList<Medium>();
-        int[] selectedRows = _ui.getMedienAuflisterTable()
-            .getSelectedRows();
+        int[] selectedRows = _ui.getMedienAuflisterTable().getSelectedRows();
         AusleiheMedienTableModel ausleiheMedienTableModel = _ui
-            .getMedienAuflisterTableModel();
+                .getMedienAuflisterTableModel();
         for (int zeile : selectedRows)
         {
             if (ausleiheMedienTableModel.zeileExistiert(zeile))
             {
                 Medium medium = ausleiheMedienTableModel
-                    .getMediumFuerZeile(zeile);
+                        .getMediumFuerZeile(zeile);
                 result.add(medium);
             }
         }

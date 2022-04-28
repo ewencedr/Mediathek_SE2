@@ -3,9 +3,9 @@
  * Kundennummer ist 6 Zeichen lang.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public final class Kundennummer
+final class Kundennummer
 {
     /**
      * int-Repräsentation der Kundenummer
@@ -21,8 +21,7 @@ public final class Kundennummer
      */
     public Kundennummer(int kundennummer)
     {
-        assert istGueltig(
-                kundennummer) : "Vorbedingung verletzt: istGueltig(kundennummer)";
+        assert istGueltig(kundennummer) : "Vorbedingung verletzt: istGueltig(kundennummer)";
 
         _kundennummer = kundennummer;
     }
@@ -37,8 +36,7 @@ public final class Kundennummer
      */
     public static boolean istGueltig(int kundennummer)
     {
-        return String.valueOf(kundennummer)
-            .matches("[0-9]{6}");
+        return String.valueOf(kundennummer).matches("[0-9]{6}");
     }
 
     /**

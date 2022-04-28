@@ -2,7 +2,7 @@
  * Der Formatierer für Medien in der Ausleiheansicht.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class AusleiheMedienFormatierer
 {
@@ -11,21 +11,27 @@ class AusleiheMedienFormatierer
 
     private final boolean _istVerliehen;
 
+    private final Kunde _ersterVormerker;
+
     /**
      * Initialisiert einen neuen AusleiheMedienformatierer für das angegebene
      * Medium.
      * 
      * @param medium Das adaptierte Medium.
      * @param istVerliehen Der Verleihstatus des Mediums.
+     * @param ersterVormerker Der erste Vormerker des Mediums, sofern es
+     *            vorgemerkt ist.
      * 
      * @require medium != null
      */
-    public AusleiheMedienFormatierer(Medium medium, boolean istVerliehen)
+    public AusleiheMedienFormatierer(Medium medium, boolean istVerliehen,
+            Kunde ersterVormerker)
     {
         assert medium != null : "Vorbedingung verletzt: medium != null";
 
         _medium = medium;
         _istVerliehen = istVerliehen;
+        _ersterVormerker = ersterVormerker;
     }
 
     /**
@@ -63,6 +69,11 @@ class AusleiheMedienFormatierer
         if (_istVerliehen)
         {
             result = "nein";
+        }
+        if (_ersterVormerker != null)
+        {
+            result += " (vorgemerkt für " + _ersterVormerker.getVorname() + " "
+                    + _ersterVormerker.getNachname() + ")";
         }
         return result;
     }

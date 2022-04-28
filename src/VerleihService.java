@@ -11,21 +11,10 @@ import java.util.List;
  * Interface ServiceObserver implementieren.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public interface VerleihService extends ObservableService
+interface VerleihService extends ObservableService
 {
-
-    /**
-     * Textrepräsentation für das Ereignis Ausleihe.
-     */
-    public static final String EREIGNIS_AUSLEIHE = "Ausleihe";
-
-    /**
-     * Textrepräsentation für das Ereignis Rückgabe.
-     */
-    public static final String EREIGNIS_RUECKGABE = "Rückgabe";
-
     /**
      * Verleiht Medien an einen Kunden. Dabei wird für jedes Medium eine neue
      * Verleihkarte angelegt.
@@ -34,11 +23,14 @@ public interface VerleihService extends ObservableService
      * @param medien Die Medien, die verliehen werden sollen
      * @param ausleihDatum Der erste Ausleihtag
      * 
+     * @throws ProtokollierException Wenn beim Protokollieren des
+     *             Verleihvorgangs ein Fehler auftritt.
+     * 
      * @require kundeImBestand(kunde)
      * @require sindAlleNichtVerliehen(medien)
      * @require ausleihDatum != null
      * 
-     * @ensure sindAlleVerliehen(medien)
+     * @ensure sindAlleVerliehenAn(kunde, medien)
      */
     void verleiheAn(Kunde kunde, List<Medium> medien, Datum ausleihDatum);
 
@@ -49,12 +41,11 @@ public interface VerleihService extends ObservableService
      * @param medien Die medien
      * 
      * 
-     * @return true, wenn das entleihen für diesen Kunden möglich ist, sonst
+     * @return true, wenn das Entleihen für diesen Kunden möglich ist, sonst
      *         false
      * 
      * @require kundeImBestand(kunde)
      * @require medienImBestand(medien)
-     * 
      */
     boolean istVerleihenMoeglich(Kunde kunde, List<Medium> medien);
 
@@ -98,6 +89,7 @@ public interface VerleihService extends ObservableService
      * Nimmt zuvor ausgeliehene Medien zurück. Die entsprechenden Verleihkarten
      * werden gelöscht.
      * 
+     * 
      * @param medien Die Medien.
      * @param rueckgabeDatum Das Rückgabedatum.
      * 
@@ -124,7 +116,7 @@ public interface VerleihService extends ObservableService
      * 
      * @param medien Eine Liste von Medien.
      * @return true, wenn alle gegebenen Medien nicht verliehen sind, sonst
-     *         false (auch wenn die Liste leer ist).
+     *         false.
      * 
      * @require medienImBestand(medien)
      */
@@ -135,12 +127,36 @@ public interface VerleihService extends ObservableService
      * 
      * @param medien Eine Liste von Medien.
      * 
-     * @return true, wenn alle gegebenen Medien verliehen sind, sonst false
-     *         (auch wenn die Liste leer ist).
+     * @return true, wenn alle gegebenen Medien verliehen sind, sonst false.
      * 
      * @require medienImBestand(medien)
      */
     boolean sindAlleVerliehen(List<Medium> medien);
+
+    /**
+     * Prüft, ob alle angegebenen Medien an einen bestimmten Kunden verliehen
+     * sind.
+     * 
+     * @param kunde Ein Kunde
+     * @param medien Eine Liste von Medien
+     * @return true, wenn alle Medien an den Kunden verliehen sind, sonst false.
+     * 
+     * @require kundeImBestand(kunde)
+     * @require medienImBestand(medien)
+     */
+    boolean sindAlleVerliehenAn(Kunde kunde, List<Medium> medien);
+
+    /**
+     * Prüft, ob ein Medium an einen bestimmten Kunden verliehen ist.
+     * 
+     * @param kunde Ein Kunde
+     * @param medium Ein Medium
+     * @return true, wenn das Medium an den Kunden verliehen ist, sonst false.
+     * 
+     * @require kundeImBestand(kunde)
+     * @require mediumImBestand(medium)
+     */
+    boolean istVerliehenAn(Kunde kunde, Medium medium);
 
     /**
      * Prüft ob der angebene Kunde existiert. Ein Kunde existiert, wenn er im

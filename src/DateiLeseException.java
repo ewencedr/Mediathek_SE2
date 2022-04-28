@@ -5,7 +5,7 @@ import java.io.IOException;
  * geklappt hat.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
 class DateiLeseException extends IOException
 {

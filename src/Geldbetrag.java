@@ -2,9 +2,9 @@
  * Ein Geldbetrag in Euro, gespeichert als ganze Euro- und ganze Cent-Beträge.
  * 
  * @author SE2-Team
- * @version SoSe 2019
+ * @version SoSe 2021
  */
-public final class Geldbetrag
+final class Geldbetrag
 {
 
     private final int _euroAnteil;
