@@ -74,6 +74,13 @@ public class DVDTest
          assertEquals(FORMATIERTER_STRING, medium.getFormatiertenString());
     }
 
+    @Test
+    public final void testBerechneMietgebühr()
+    {
+    	assertEquals( new Geldbetrag(300),_dvd1.berechneMietgebuehr(1));
+    	assertEquals( new Geldbetrag(600),_dvd1.berechneMietgebuehr(2));
+    }
+    
     protected DVD getMedium()
     {
         return new DVD(TITEL, KOMMENTAR, REGISSEUR, LAENGE);

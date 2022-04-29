@@ -42,19 +42,19 @@ public class VerleihkarteTest
     @Test
     public void testgetMietgebuehr()
     {
-        // TODO für Aufgabe 4.2.4: Die Kommentarzeichen für die folgenden
-        // Anweisungen entfernen
-        // Datum tag1 = Datum.heute().minus(1);
-        // Verleihkarte karte = new Verleihkarte(_kunde, _medium, tag1);
-        // assertEquals(new Geldbetrag(300 * 2), karte.getMietgebuehr());
-        //
-        // Datum tag2 = Datum.heute().minus(2);
-        // karte = new Verleihkarte(_kunde, _medium, tag2);
-        // assertEquals(new Geldbetrag(300 * 3), karte.getMietgebuehr());
-        //
-        // Datum tag3 = Datum.heute().minus(7);
-        // karte = new Verleihkarte(_kunde, _medium, tag3);
-        // assertEquals(new Geldbetrag(300 * 8), karte.getMietgebuehr());
+         //TODO für Aufgabe 4.2.4: Die Kommentarzeichen für die folgenden
+         //Anweisungen entfernen
+         Datum tag1 = Datum.heute().minus(1);
+         Verleihkarte karte = new Verleihkarte(_kunde, _medium, tag1);
+         assertEquals(new Geldbetrag(300 * 2), karte.getMietgebuehr());
+        
+         Datum tag2 = Datum.heute().minus(2);
+         karte = new Verleihkarte(_kunde, _medium, tag2);
+         assertEquals(new Geldbetrag(300 * 3), karte.getMietgebuehr());
+        
+         Datum tag3 = Datum.heute().minus(7);
+         karte = new Verleihkarte(_kunde, _medium, tag3);
+         assertEquals(new Geldbetrag(300 * 8), karte.getMietgebuehr());
     }
 
     @Test

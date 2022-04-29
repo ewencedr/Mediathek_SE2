@@ -64,4 +64,11 @@ public class VideospielTest
         assertNotNull(medium.getFormatiertenString());
         assertEquals(FORMATIERTER_STRING, medium.getFormatiertenString());
     }
+    
+    @Test
+    public final void testBerechneMietgebühr()
+    {
+    	assertEquals(new Geldbetrag(200),_videoSpiel.berechneMietgebuehr(1));
+    	assertEquals(new Geldbetrag(200),_videoSpiel.berechneMietgebuehr(2));
+    }
 }

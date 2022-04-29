@@ -86,6 +86,15 @@ public class CDTest
          assertNotNull(medium.getFormatiertenString());
          assertEquals(FORMATIERTER_STRING, medium.getFormatiertenString());
     }
+    
+    @Test
+    public final void testBerechneMietgebühr()
+    {
+    	Geldbetrag geldbetrag1 = new Geldbetrag(300);
+    	Geldbetrag geldbetrag2 = new Geldbetrag(600);
+    	assertEquals( geldbetrag1, _cd1.berechneMietgebuehr(1));
+    	assertEquals(geldbetrag2, _cd1.berechneMietgebuehr(2));
+    }
 
     private CD getMedium()
     {
