@@ -1,13 +1,17 @@
 package de.uni_hamburg.informatik.swt.se2.mediathek.services.verleih;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.AbstractObservableService;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.kundenstamm.KundenstammService;
@@ -29,6 +33,13 @@ public class VerleihServiceImpl extends AbstractObservableService
      * die Angabe des Mediums möglich. Beispiel: _verleihkarten.get(medium)
      */
     private Map<Medium, Verleihkarte> _verleihkarten;
+    
+    /**
+     * Diese Map speichert für jedes eingefügte Medium die dazugehörige
+     * Vormerkkarte. Ein Zugriff auf die Vormerkkarte ist dadurch leicht über
+     * die Angabe des Mediums möglich. Beispiel: _verleihkarten.get(medium)
+     */
+    private Map<Medium, Vormerkkarte> _vormerkkarten;
 
     /**
      * Der Medienbestand.
@@ -64,6 +75,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienbestand != null : "Vorbedingung verletzt: medienbestand  != null";
         assert initialBestand != null : "Vorbedingung verletzt: initialBestand  != null";
         _verleihkarten = erzeugeVerleihkartenBestand(initialBestand);
+        _vormerkkarten = new HashMap<Medium,Vormerkkarte>();
         _kundenstamm = kundenstamm;
         _medienbestand = medienbestand;
         _protokollierer = new VerleihProtokollierer();
@@ -296,5 +308,72 @@ public class VerleihServiceImpl extends AbstractObservableService
         }
         return result;
     }
+    
+    @Override
+    public void merkeVor(Kunde kunde, List<Medium> medien) {
+    	assertNotNull(kunde);
+    	
+    	assert kundeImBestand(kunde) : "Kunde nicht im Bestand";
+    	assert medienImBestand(medien) : "Medium nicht im Bestand";
+    	assert istVormerkenMoeglich(kunde,medien) : "Vormerken nicht moeglich";
+    	
+    	List<Vormerkkarte> vormerkkarten = gibVormerkkarten(medien);
+    	
+    	for (Vormerkkarte vormerkkarte : vormerkkarten) {
+    	//	_vormerkkarten.put(medien.get(vormerkkarten.indexOf(vormerkkarte)),vormerkkarte);
+    		vormerkkarte.fuegeVormerkerhinzu(kunde);
+    	}
+    	
+    	
+    }
+    
+    @Override
+    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien) {
+    	
+    	
+    	List<Vormerkkarte> vormerkkarten = gibVormerkkarten(medien);
+    	
+    	for (Vormerkkarte vormerkkarte : vormerkkarten) {
+        	
+        	if (!vormerkkarte.istVormerkbar(kunde)) {
+        		return false;
+        	}
+    	}
+    	return true;
+    	
+
+    }
+    
+    @Override
+    public boolean istVormerkkarteVorhanden(Medium medium) {
+    	return (_vormerkkarten.containsKey(medium));
+    }
+    
+    @Override
+	public List<Vormerkkarte> gibVormerkkarten(List<Medium> medien) {
+		
+    	List<Vormerkkarte> vormerkkarten = new LinkedList<Vormerkkarte>();
+    	
+    	for (Medium medium : medien) {
+    		if (istVormerkkarteVorhanden(medium)) {
+    			vormerkkarten.add(_vormerkkarten.get(medium));
+    		}
+    		vormerkkarten.add(new Vormerkkarte(medium));
+    	}
+    	return vormerkkarten;
+    }
+    
+    @Override
+	public Vormerkkarte gibVormerkkarte(Medium medium) {
+	
+    	
+		if (istVormerkkarteVorhanden(medium)) {
+			return _vormerkkarten.get(medium);
+		}
+		return new Vormerkkarte(medium);
+    }
+    	
+
+    
 
 }
