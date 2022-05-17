@@ -355,22 +355,22 @@ public class VerleihServiceImpl extends AbstractObservableService
     	List<Vormerkkarte> vormerkkarten = new LinkedList<Vormerkkarte>();
     	
     	for (Medium medium : medien) {
-    		if (istVormerkkarteVorhanden(medium)) {
-    			vormerkkarten.add(_vormerkkarten.get(medium));
+    		if (!istVormerkkarteVorhanden(medium)) {
+    			_vormerkkarten.put(medium, new Vormerkkarte(medium));
     		}
-    		vormerkkarten.add(new Vormerkkarte(medium));
+    		
+    		vormerkkarten.add(_vormerkkarten.get(medium));
     	}
     	return vormerkkarten;
     }
     
     @Override
 	public Vormerkkarte gibVormerkkarte(Medium medium) {
-	
     	
-		if (istVormerkkarteVorhanden(medium)) {
-			return _vormerkkarten.get(medium);
+		if (!istVormerkkarteVorhanden(medium)) {
+			_vormerkkarten.put(medium, new Vormerkkarte(medium));
 		}
-		return new Vormerkkarte(medium);
+		return _vormerkkarten.get(medium);
     }
     	
 

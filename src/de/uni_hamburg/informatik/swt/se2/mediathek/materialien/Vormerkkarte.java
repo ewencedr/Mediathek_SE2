@@ -47,7 +47,7 @@ public class Vormerkkarte {
 	}
 	
 	public boolean istVormerkbar(Kunde kunde) {
-		return _vormerker.size()<_size;
+		return _vormerker.size()<_size && !_vormerker.contains(kunde);
 	}
 	
 }
