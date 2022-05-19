@@ -321,6 +321,7 @@ public class VerleihServiceImpl extends AbstractObservableService
             //	_vormerkkarten.put(medien.get(vormerkkarten.indexOf(vormerkkarte)),vormerkkarte);
             vormerkkarte.fuegeVormerkerhinzu(kunde);
         }
+        informiereUeberAenderung();
 
     }
 
