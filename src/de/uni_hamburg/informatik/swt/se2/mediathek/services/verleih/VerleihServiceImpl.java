@@ -329,7 +329,10 @@ public class VerleihServiceImpl extends AbstractObservableService
     
     @Override
     public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien) {
+    	assertNotNull(kunde);
     	
+    	assert kundeImBestand(kunde) : "Kunde nicht im Bestand";
+    	assert medienImBestand(medien) : "Medium nicht im Bestand";
     	
     	List<Vormerkkarte> vormerkkarten = gibVormerkkarten(medien);
     	
@@ -346,11 +349,14 @@ public class VerleihServiceImpl extends AbstractObservableService
     
     @Override
     public boolean istVormerkkarteVorhanden(Medium medium) {
+    	assert mediumImBestand(medium) : "Medium nicht im Bestand";
     	return (_vormerkkarten.containsKey(medium));
     }
     
+    
     @Override
 	public List<Vormerkkarte> gibVormerkkarten(List<Medium> medien) {
+		assert medienImBestand(medien): "Eines oder mehrere der Medien nicht im Bestand";
 		
     	List<Vormerkkarte> vormerkkarten = new LinkedList<Vormerkkarte>();
     	
@@ -366,6 +372,7 @@ public class VerleihServiceImpl extends AbstractObservableService
     
     @Override
 	public Vormerkkarte gibVormerkkarte(Medium medium) {
+    	assert mediumImBestand(medium) : "Medium nicht in Bestand";
     	
 		if (!istVormerkkarteVorhanden(medium)) {
 			_vormerkkarten.put(medium, new Vormerkkarte(medium));
@@ -374,6 +381,12 @@ public class VerleihServiceImpl extends AbstractObservableService
     }
     	
 
-    
+    @Override
+    public void entferneVormerkkarte(Medium medium) {
+    	assert mediumImBestand(medium) : "Medium nicht in Bestand";
+    	assert istVormerkkarteVorhanden(medium) : "Vormerkkarte nicht vorhanden";
+    	
+    	_vormerkkarten.remove(medium);
+    }
 
 }

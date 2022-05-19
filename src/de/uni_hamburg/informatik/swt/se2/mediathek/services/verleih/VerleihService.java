@@ -232,45 +232,68 @@ public interface VerleihService extends ObservableService
     
     
     /**
+     * Merkt die ausgewählten Medien für den Kunden vor.
+     * @param kunde Der Kunde der die Medien vormerken moechte.
+     * @param medien Die Liste der vorzumerkenden Medien
      * 
-     * @param kunde
-     * @param medium
+     * @require kunde != null
+     * @require kundeImBestand(kunde)
+     * @require medienImBestand(medien)
+     * @require istVormerkenMoeglich(kunde, medien)
      */
     void merkeVor(Kunde kunde, List<Medium> medien);
     
     /**
+     * Gibt den vormerkzustand einer Liste von Medien zurück. True,
+     * wenn alle Medien vom Kunden vorgemerkt werden koennen, False sonst.
+     * @param kunde Ein Kunde.
+     * @param medien Eine Liste von M<edien
+     * @return Wahrheitswert
      * 
-     * @param kunde
-     * @param medien
-     * @return
+     * @require kunde != null
+     * @require kundeImBestand(kunde)
+     * @require medienImBestand(medien)
      */
     boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien);
     
     
     /**
+     * Testet, ob bereits eine Vormerkkarte zu medium existiert.
+     * Gibt Wahrheitswert über Zustand zurück.
+     * @param medium Ein Medium
+     * @return Wahrheitswert ob Vormerkkarte existiert.
      * 
-     * @param medium
-     * @return
+     * @require mediumImBestand(medium)
      */
     boolean istVormerkkarteVorhanden(Medium medium);
     
     /**
-     * Gib vorhandene Vormerkkarte oder erstelle eine neue, falls noch keine vorhanden
+     * Gibt Vormerkkarten zu Medien, erstellt neue falls noch keine existiert
      * 
-     * @param medium
-     * @return
+     * @param medien Eine Liste an  Medien
+     * @return Die Liste Vormerkkarten zu den Medien
+     * 
+     * @require medienImBestand(medien)
      */
     List<Vormerkkarte> gibVormerkkarten(List<Medium> medien);
    
     
     /**
+     * Gibt Vormerkkarte zu Medium, erstellt neue falls noch keine existiert
+     * @param medium Ein Medium
+     * @return Vormerkkarte zu dem Medium
      * 
-     * @param medium
-     * @return
+     * @require mediumImBestand(medium)
      */
     Vormerkkarte gibVormerkkarte(Medium medium);
     
-    
-    
+    /**
+     * Entfernt die Vormerkkarte zu gegebenem Medium
+     * @param medium Ein Medium
+     * 
+     * @require mediumImBestand(medium)
+     * @require istVormerkkarteVorhanden(medium)
+     */
+    void entferneVormerkkarte(Medium medium);
  
 }
