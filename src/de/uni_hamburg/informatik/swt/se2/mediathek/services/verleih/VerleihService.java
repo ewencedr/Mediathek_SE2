@@ -228,21 +228,18 @@ public interface VerleihService extends ObservableService
      * @ensure (result != null)
      */
     Verleihkarte getVerleihkarteFuer(Medium medium);
-    
-    
-    
+
     /**
      * Merkt die ausgewählten Medien für den Kunden vor.
      * @param kunde Der Kunde der die Medien vormerken moechte.
      * @param medien Die Liste der vorzumerkenden Medien
      * 
-     * @require kunde != null
      * @require kundeImBestand(kunde)
      * @require medienImBestand(medien)
      * @require istVormerkenMoeglich(kunde, medien)
      */
     void merkeVor(Kunde kunde, List<Medium> medien);
-    
+
     /**
      * Gibt den vormerkzustand einer Liste von Medien zurück. True,
      * wenn alle Medien vom Kunden vorgemerkt werden koennen, False sonst.
@@ -250,13 +247,11 @@ public interface VerleihService extends ObservableService
      * @param medien Eine Liste von M<edien
      * @return Wahrheitswert
      * 
-     * @require kunde != null
      * @require kundeImBestand(kunde)
      * @require medienImBestand(medien)
      */
     boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien);
-    
-    
+
     /**
      * Testet, ob bereits eine Vormerkkarte zu medium existiert.
      * Gibt Wahrheitswert über Zustand zurück.
@@ -266,7 +261,7 @@ public interface VerleihService extends ObservableService
      * @require mediumImBestand(medium)
      */
     boolean istVormerkkarteVorhanden(Medium medium);
-    
+
     /**
      * Gibt Vormerkkarten zu Medien, erstellt neue falls noch keine existiert
      * 
@@ -276,8 +271,7 @@ public interface VerleihService extends ObservableService
      * @require medienImBestand(medien)
      */
     List<Vormerkkarte> gibVormerkkarten(List<Medium> medien);
-   
-    
+
     /**
      * Gibt Vormerkkarte zu Medium, erstellt neue falls noch keine existiert
      * @param medium Ein Medium
@@ -286,7 +280,7 @@ public interface VerleihService extends ObservableService
      * @require mediumImBestand(medium)
      */
     Vormerkkarte gibVormerkkarte(Medium medium);
-    
+
     /**
      * Entfernt die Vormerkkarte zu gegebenem Medium
      * @param medium Ein Medium
@@ -295,5 +289,5 @@ public interface VerleihService extends ObservableService
      * @require istVormerkkarteVorhanden(medium)
      */
     void entferneVormerkkarte(Medium medium);
- 
+
 }
