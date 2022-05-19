@@ -220,6 +220,11 @@ public class VerleihServiceImpl extends AbstractObservableService
             _verleihkarten.put(medium, verleihkarte);
             _protokollierer.protokolliere(
                     VerleihProtokollierer.EREIGNIS_AUSLEIHE, verleihkarte);
+            Vormerkkarte vormerkkarte = gibVormerkkarte(medium);
+            if (vormerkkarte.gibErstenVormerker() != null)
+            {
+                vormerkkarte.entferneVormerker();
+            }
         }
         // Was passiert wenn das Protokollieren mitten in der Schleife
         // schief geht? informiereUeberAenderung in einen finally Block?
@@ -288,6 +293,32 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert istVerliehen(
                 medium) : "Vorbedingung verletzt: istVerliehen(medium)";
         return _verleihkarten.get(medium);
+    }
+
+    @Override
+    public boolean sindAlleVorgemerkt(Kunde kunde, List<Medium> medien)
+    {
+        assert kundeImBestand(
+                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
+        assert medienImBestand(
+                medien) : "Vorbedingung verletzt: medienImBestand(medien)";
+
+        List<Vormerkkarte> vormerkkarten = gibVormerkkarten(medien);
+        for (Vormerkkarte vormerkkarte : vormerkkarten)
+        {
+            if (vormerkkarte.gibErstenVormerker() != null
+
+                    && !vormerkkarte.gibErstenVormerker()
+                        .equals(kunde))
+            {
+
+                return false;
+
+            }
+
+        }
+        return true;
+
     }
 
     @Override

@@ -230,6 +230,18 @@ public interface VerleihService extends ObservableService
     Verleihkarte getVerleihkarteFuer(Medium medium);
 
     /**
+     * Gibt zurück, ob alle ausgewählten Medien von dem Kunden vorgemerkt sind.
+     * 
+     * @param kunde Der Kunde
+     * @param medien Die Medien
+     * @return true, wenn alle Medien vom Kunden vorgemerkt sind, sonst false
+     * 
+     * @require kundeImBestand(kunde)
+     * @require medienImBestand(medien)
+     */
+    boolean sindAlleVorgemerkt(Kunde kunde, List<Medium> medien);
+
+    /**
      * Merkt die ausgewählten Medien für den Kunden vor.
      * @param kunde Der Kunde der die Medien vormerken moechte.
      * @param medien Die Liste der vorzumerkenden Medien
