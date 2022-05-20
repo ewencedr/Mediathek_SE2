@@ -2,6 +2,7 @@ package de.uni_hamburg.informatik.swt.se2.mediathek.services.verleih;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Kundennummer;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.CD;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.ServiceObserver;
@@ -32,6 +34,7 @@ public class VerleihServiceImplTest
     private VerleihService _service;
     private List<Medium> _medienListe;
     private Kunde _vormerkkunde;
+    private List<Vormerkkarte> _vormerkkarten;
 
     public VerleihServiceImplTest()
     {
@@ -42,6 +45,7 @@ public class VerleihServiceImplTest
 
         _vormerkkunde = new Kunde(new Kundennummer(666999), "paul", "panter");
 
+        _vormerkkarten = new ArrayList<Vormerkkarte>();
         kundenstamm.fuegeKundenEin(_kunde);
         kundenstamm.fuegeKundenEin(_vormerkkunde);
         MedienbestandService medienbestand = new MedienbestandServiceImpl(
@@ -120,8 +124,6 @@ public class VerleihServiceImplTest
         assertTrue(_service.getVerleihkarten()
             .isEmpty());
     }
-    
-    
 
     @Test
     public void testVerleihEreignisBeobachter() throws ProtokollierException
@@ -152,4 +154,28 @@ public class VerleihServiceImplTest
         assertFalse(ereignisse[0]);
     }
 
+    @Test
+    public void testVormerken()
+    {
+        // Lege eine Liste mit nur verliehenen und eine Liste mit ausschließlich
+        // nicht verliehenen Medien an
+        List<Medium> verlieheneMedien = _medienListe.subList(0, 2);
+        List<Medium> nichtVerlieheneMedien = _medienListe.subList(2, 4);
+        _service.merkeVor(_vormerkkunde, verlieheneMedien);
+
+        assertTrue(_service.istVormerkkarteVorhanden(verlieheneMedien.get(0)));
+
+        assertFalse(
+                _service.istVormerkenMoeglich(_vormerkkunde, verlieheneMedien));
+        assertTrue(_service.istVormerkenMoeglich(_kunde, verlieheneMedien));
+        assertTrue(_service.istVormerkenMoeglich(_vormerkkunde,
+                nichtVerlieheneMedien));
+        assertTrue(
+                _service.istVormerkenMoeglich(_kunde, nichtVerlieheneMedien));
+        assertNotNull(_service.gibVormerkkarten(verlieheneMedien));
+        assertNotNull(_service.gibVormerkkarten(nichtVerlieheneMedien));
+        assertNotNull(_service.gibVormerkkarte(verlieheneMedien.get(0)));
+
+    }
 }
+
