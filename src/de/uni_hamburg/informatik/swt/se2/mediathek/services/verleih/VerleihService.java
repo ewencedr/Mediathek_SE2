@@ -293,13 +293,5 @@ public interface VerleihService extends ObservableService
      */
     Vormerkkarte gibVormerkkarte(Medium medium);
 
-    /**
-     * Entfernt die Vormerkkarte zu gegebenem Medium
-     * @param medium Ein Medium
-     * 
-     * @require mediumImBestand(medium)
-     * @require istVormerkkarteVorhanden(medium)
-     */
-    void entferneVormerkkarte(Medium medium);
 
 }

@@ -416,14 +416,5 @@ public class VerleihServiceImpl extends AbstractObservableService
         return _vormerkkarten.get(medium);
     }
 
-    @Override
-    public void entferneVormerkkarte(Medium medium)
-    {
-        assert mediumImBestand(medium) : "Medium nicht in Bestand";
-        assert istVormerkkarteVorhanden(
-                medium) : "Vormerkkarte nicht vorhanden";
-
-        _vormerkkarten.remove(medium);
-    }
 
 }
