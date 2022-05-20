@@ -120,6 +120,8 @@ public class VerleihServiceImplTest
         assertTrue(_service.getVerleihkarten()
             .isEmpty());
     }
+    
+    
 
     @Test
     public void testVerleihEreignisBeobachter() throws ProtokollierException

@@ -44,21 +44,21 @@ public class VormerkkarteTest
     }
     
     @Test
-    public void testegibErstenVormerker() throws Exception
+    public void testegibErstenVormerker()
     {
     	_karte.fuegeVormerkerhinzu(_kunde);
     	assertEquals(_kunde, _karte.gibErstenVormerker());
     }
 
     @Test
-    public void testefuegeVormerkerhinzu() throws Exception
+    public void testefuegeVormerkerhinzu()
     {
     	_karte.fuegeVormerkerhinzu(_kunde);
         assertEquals(_kunde, _karte.gibErstenVormerker());
     }
     
     @Test
-    public void testeentferneVormerker() throws Exception
+    public void testeentferneVormerker()
     {
     	_karte.fuegeVormerkerhinzu(_kunde);
     	_karte.fuegeVormerkerhinzu(_kunde2);
@@ -69,7 +69,7 @@ public class VormerkkarteTest
     }
 
     @Test
-    public void testeKonstruktor() throws Exception
+    public void testeKonstruktor()
     {
     	_karte.fuegeVormerkerhinzu(_kunde);
     	_karte.fuegeVormerkerhinzu(_kunde2);
@@ -80,7 +80,7 @@ public class VormerkkarteTest
 
 
     @Test
-    public void testgibVormerker() throws Exception
+    public void testgibVormerker()
     {
     	_karte.fuegeVormerkerhinzu(_kunde);
     	_karte.fuegeVormerkerhinzu(_kunde2);
@@ -91,7 +91,7 @@ public class VormerkkarteTest
     }
     
     @Test
-    public void testistVormerkbar() throws Exception
+    public void testistVormerkbar()
     {
     	assertTrue(_karte.istVormerkbar(_kunde));
     	
