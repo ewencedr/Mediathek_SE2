@@ -105,7 +105,6 @@ public class DatumAuswaehlWerkzeug extends BeobachtbaresObjekt
             });
     }
 
-    //TODO: Tests erstellen
     @Override
     public void meldeAenderung()
     {
