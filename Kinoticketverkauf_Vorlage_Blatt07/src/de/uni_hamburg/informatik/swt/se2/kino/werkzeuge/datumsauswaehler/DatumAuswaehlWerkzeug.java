@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
+import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.abstrakt.BeobachtbaresObjekt;
+import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.kasse.Beobachter;
 
 /**
  * Mit diesem Werkzeug kann ein Datum ausgewählt werden.
@@ -16,7 +18,7 @@ import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
  * @author SE2-Team
  * @version SoSe 2021
  */
-public class DatumAuswaehlWerkzeug
+public class DatumAuswaehlWerkzeug extends BeobachtbaresObjekt
 {
     private DatumAuswaehlWerkzeugUI _ui;
     private Datum _ausgewaehltesDatum;
@@ -40,7 +42,8 @@ public class DatumAuswaehlWerkzeug
     {
         _ausgewaehltesDatum = _ausgewaehltesDatum.vorherigerTag();
         _ui.getDatumLabel()
-                .setText(_ausgewaehltesDatum.getFormatiertenString());
+            .setText(_ausgewaehltesDatum.getFormatiertenString());
+        meldeAenderung();
     }
 
     /**
@@ -50,7 +53,8 @@ public class DatumAuswaehlWerkzeug
     {
         _ausgewaehltesDatum = _ausgewaehltesDatum.naechsterTag();
         _ui.getDatumLabel()
-                .setText(_ausgewaehltesDatum.getFormatiertenString());
+            .setText(_ausgewaehltesDatum.getFormatiertenString());
+        meldeAenderung();
     }
 
     /**
@@ -80,22 +84,34 @@ public class DatumAuswaehlWerkzeug
      */
     private void registriereUIAktionen()
     {
-        _ui.getZurueckButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+        _ui.getZurueckButton()
+            .addActionListener(new ActionListener()
             {
-                zurueckButtonWurdeGedrueckt();
-            }
-        });
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    zurueckButtonWurdeGedrueckt();
+                }
+            });
 
-        _ui.getWeiterButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+        _ui.getWeiterButton()
+            .addActionListener(new ActionListener()
             {
-                weiterButtonWurdeGedrueckt();
-            }
-        });
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    weiterButtonWurdeGedrueckt();
+                }
+            });
+    }
+
+    //TODO: Tests erstellen
+    @Override
+    public void meldeAenderung()
+    {
+        for (Beobachter beobachter : _beobachter)
+        {
+            beobachter.reagiereAufAenderungen("Datum");
+        }
     }
 }

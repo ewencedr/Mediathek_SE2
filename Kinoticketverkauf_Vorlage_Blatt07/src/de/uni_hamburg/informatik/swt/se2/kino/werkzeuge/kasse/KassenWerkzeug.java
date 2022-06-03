@@ -19,7 +19,7 @@ import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.vorstellungsauswaehler.V
  * @author SE2-Team
  * @version SoSe 2021
  */
-public class KassenWerkzeug
+public class KassenWerkzeug implements Beobachter
 {
     // Das Material dieses Werkzeugs
     private Kino _kino;
@@ -60,6 +60,9 @@ public class KassenWerkzeug
         setzeAusgewaehlteVorstellung();
 
         _ui.zeigeFenster();
+        
+        _datumAuswaehlWerkzeug.fuegeBeobachterHinzu(this);
+        _vorstellungAuswaehlWerkzeug.fuegeBeobachterHinzu(this);
     }
 
     /**
@@ -67,14 +70,15 @@ public class KassenWerkzeug
      */
     private void registriereUIAktionen()
     {
-        _ui.getBeendenButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+        _ui.getBeendenButton()
+            .addActionListener(new ActionListener()
             {
-                reagiereAufBeendenButton();
-            }
-        });
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    reagiereAufBeendenButton();
+                }
+            });
     }
 
     /**
@@ -118,5 +122,19 @@ public class KassenWerkzeug
     private Vorstellung getAusgewaehlteVorstellung()
     {
         return _vorstellungAuswaehlWerkzeug.getAusgewaehlteVorstellung();
+    }
+
+    //TODO: Tests implementieren
+    @Override
+    public void reagiereAufAenderungen(String herkunft)
+    {
+        if (herkunft.equals("Datum"))
+        {
+            setzeTagesplanFuerAusgewaehltesDatum();
+        }
+        else if (herkunft.equals("Vorstellung"))
+        {
+            setzeAusgewaehlteVorstellung();
+        }
     }
 }
