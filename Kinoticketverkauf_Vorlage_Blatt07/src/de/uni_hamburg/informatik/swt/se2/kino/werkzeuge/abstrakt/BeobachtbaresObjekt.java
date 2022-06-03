@@ -14,14 +14,14 @@ public abstract class BeobachtbaresObjekt
         _beobachter = new HashSet<Beobachter>();
     }
 
-    //TODO: Kommentare
+    //TODO: Kommentare + tests
     public void fuegeBeobachterHinzu(Beobachter beobachter)
     {
         assert beobachter != null : "Vorbedingung verletzt: beobachter ist null";
         _beobachter.add(beobachter);
     }
 
-    //TODO: Kommentare
+    //TODO: Kommentare + tests
     public void entferneBeobachter(Beobachter beobachter)
     {
         assert beobachter != null : "Vorbedingung verletzt: beobachter ist null";
@@ -29,7 +29,7 @@ public abstract class BeobachtbaresObjekt
         _beobachter.remove(beobachter);
     }
 
-    //TODO: Kommentare
+    //TODO: Kommentare + tests
     protected void meldeAenderung()
     {
         for (Beobachter beobachter : _beobachter)
