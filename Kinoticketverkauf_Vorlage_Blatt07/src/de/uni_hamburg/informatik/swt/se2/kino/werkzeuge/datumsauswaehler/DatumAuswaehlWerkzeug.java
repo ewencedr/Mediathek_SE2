@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.abstrakt.BeobachtbaresObjekt;
-import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.kasse.Beobachter;
 
 /**
  * Mit diesem Werkzeug kann ein Datum ausgewählt werden.
@@ -103,14 +102,5 @@ public class DatumAuswaehlWerkzeug extends BeobachtbaresObjekt
                     weiterButtonWurdeGedrueckt();
                 }
             });
-    }
-
-    @Override
-    public void meldeAenderung()
-    {
-        for (Beobachter beobachter : _beobachter)
-        {
-            beobachter.reagiereAufAenderungen("Datum");
-        }
     }
 }

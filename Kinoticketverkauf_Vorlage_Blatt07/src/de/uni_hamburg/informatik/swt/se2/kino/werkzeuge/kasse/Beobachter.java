@@ -14,5 +14,5 @@ public interface Beobachter
      * 
      * @param herkunft des Methodenaufrufs
      */
-    public void reagiereAufAenderungen(String herkunft);
+    public void reagiereAufAenderungen(Object herkunft);
 }

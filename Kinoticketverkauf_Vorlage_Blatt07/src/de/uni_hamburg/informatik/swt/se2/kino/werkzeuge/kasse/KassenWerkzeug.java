@@ -60,7 +60,7 @@ public class KassenWerkzeug implements Beobachter
         setzeAusgewaehlteVorstellung();
 
         _ui.zeigeFenster();
-        
+
         _datumAuswaehlWerkzeug.fuegeBeobachterHinzu(this);
         _vorstellungAuswaehlWerkzeug.fuegeBeobachterHinzu(this);
     }
@@ -124,15 +124,14 @@ public class KassenWerkzeug implements Beobachter
         return _vorstellungAuswaehlWerkzeug.getAusgewaehlteVorstellung();
     }
 
-    //TODO: Tests implementieren
     @Override
-    public void reagiereAufAenderungen(String herkunft)
+    public void reagiereAufAenderungen(Object herkunft)
     {
-        if (herkunft.equals("Datum"))
+        if (herkunft == _datumAuswaehlWerkzeug)
         {
             setzeTagesplanFuerAusgewaehltesDatum();
         }
-        else if (herkunft.equals("Vorstellung"))
+        else if (herkunft == _vorstellungAuswaehlWerkzeug)
         {
             setzeAusgewaehlteVorstellung();
         }

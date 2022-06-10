@@ -7,21 +7,29 @@ import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.kasse.Beobachter;
 
 public abstract class BeobachtbaresObjekt
 {
-    protected Set<Beobachter> _beobachter;
+    private Set<Beobachter> _beobachter;
 
     public BeobachtbaresObjekt()
     {
         _beobachter = new HashSet<Beobachter>();
     }
 
-    //TODO: Kommentare + tests
+    /**
+     * Diese Methode fügt einen Beobachter für das beobachtbare Objekt hinzu.
+     *
+     * @param beobachter Neuer Beobachter für das Objekt
+     */
     public void fuegeBeobachterHinzu(Beobachter beobachter)
     {
         assert beobachter != null : "Vorbedingung verletzt: beobachter ist null";
         _beobachter.add(beobachter);
     }
 
-    //TODO: Kommentare + tests
+    /**
+     * Entfernt einen Beobachter für das beobachtbare Objekt.
+     * 
+     * @param beobachter Zu entfernender Beobachter für das Objekt
+     */
     public void entferneBeobachter(Beobachter beobachter)
     {
         assert beobachter != null : "Vorbedingung verletzt: beobachter ist null";
@@ -29,12 +37,14 @@ public abstract class BeobachtbaresObjekt
         _beobachter.remove(beobachter);
     }
 
-    //TODO: Kommentare + tests
+    /**
+     * Diese Methode teilt jedem Beobachter mit, dass eine Änderung im Objekt passiert ist.
+     */
     protected void meldeAenderung()
     {
         for (Beobachter beobachter : _beobachter)
         {
-            beobachter.reagiereAufAenderungen("abstract");
+            beobachter.reagiereAufAenderungen(this);
         }
     }
 }
