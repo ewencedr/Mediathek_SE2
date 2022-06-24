@@ -55,20 +55,64 @@ public class BarzahlWerkzeug
                 @Override
                 public void propertyChange(PropertyChangeEvent e)
                 {
-                    String val = _ui.getBezahlFeld()
-                        .getText()
-                        .trim()
-                        .replace("€", "")
-                        .replace(".", "")
-                        .replace(",", "");
 
-                    int int_val = Integer.parseInt(val);
-                    System.out.println(val + " " + int_val);
-                    _ui.getRueckgabeFeld()
-                        .setValue((float) restpreisBerechnen(int_val) / 100);
-                    reagiereAufEingabe(int_val);
+                    if (_ui.getBezahlFeld()
+                        .isEditValid())
+                    {
+                        String val = _ui.getBezahlFeld()
+                            .getValue()
+                            .toString();
+
+                        int int_val = rechnePreisUm(val);
+                        _ui.getRueckgabeFeld()
+                            .setValue(
+                                    (float) restpreisBerechnen(int_val) / 100);
+                        reagiereAufEingabe(int_val);
+                    }
+
                 }
             });
+    }
+
+    private int rechnePreisUm(String val)
+    {
+        int int_val = 0;
+        if (val.contains("."))
+        {
+            String[] string_array = val.split("[.]");
+            String euro = string_array[0];
+            String cent = string_array[1];
+            if (cent.length() > 2)
+            {
+                String new_cent = cent.substring(0, 2);
+                int int_temp2 = Integer.parseInt(new_cent);
+                char temp = cent.charAt(2);
+                int temp_int = Character.getNumericValue(temp);
+
+                if (temp_int > 4)
+                {
+                    System.out.println("Temp_int: " + temp_int);
+                    int_temp2++;
+                    cent = String.valueOf(int_temp2);
+                }
+                else
+                {
+                    cent = cent.substring(0, 2);
+                }
+
+            }
+            else if (cent.length() == 1)
+            {
+                cent = cent + "0";
+            }
+            String output = euro + cent;
+            int_val = Integer.parseInt(output);
+        }
+        else
+        {
+            int_val = 100 * Integer.parseInt(val);
+        }
+        return int_val;
     }
 
     private int restpreisBerechnen(int eingabe)
