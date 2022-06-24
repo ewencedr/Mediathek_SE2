@@ -99,7 +99,11 @@ public class PlatzVerkaufsWerkzeug
         Set<Platz> plaetze = _ui.getPlatzplan()
             .getAusgewaehltePlaetze();
         _bar = new BarzahlWerkzeug(_vorstellung.getPreisFuerPlaetze(plaetze));
-        verkaufePlaetze(_vorstellung);
+        
+        if (_bar.getBezahltWorden()) {
+        	verkaufePlaetze(_vorstellung);
+        }
+        
     }
 
     /**

@@ -1,10 +1,11 @@
 package de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.barzahlung;
 
+
+import java.awt.Dialog.ModalityType;
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.text.NumberFormat;
-import java.util.Locale;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 public class BarzahlWerkzeugUI
 {
@@ -28,7 +30,7 @@ public class BarzahlWerkzeugUI
     private JLabel _bezahltLabel;
     private JLabel _restLabel;
 
-    private NumberFormat euroFormat;
+    //private NumberFormat euroFormat;
 
     private int _vorstellungspreis;
 
@@ -37,7 +39,7 @@ public class BarzahlWerkzeugUI
      */
     public BarzahlWerkzeugUI(int preis)
     {
-        euroFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        //euroFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice();
         int screenWidth = gd.getDisplayMode()
@@ -46,7 +48,9 @@ public class BarzahlWerkzeugUI
             .getHeight();
         _vorstellungspreis = preis;
         JPanel panel = erstelleHauptdialog();
+        
         _hauptDialog = new JDialog();
+        
         //_hauptDialog.setBounds(new Rectangle(500,500));
         int width = 500;
         int height = 500;
@@ -54,7 +58,7 @@ public class BarzahlWerkzeugUI
                 screenHeight / 2 - height / 2, width, height);
         _hauptDialog.add(panel);
         //_hauptDialog.pack();
-        _hauptDialog.setVisible(true);
+        
 
     }
 
@@ -67,20 +71,20 @@ public class BarzahlWerkzeugUI
         JPanel panel = new JPanel();
         BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
         panel.setLayout(boxlayout);
-        _zuzahlenderBetrag = new JFormattedTextField(euroFormat);
-        _zuzahlenderBetrag.setValue((float) _vorstellungspreis / 100);
+        _zuzahlenderBetrag = new JFormattedTextField();
+        _zuzahlenderBetrag.setValue(_vorstellungspreis);
         _zuzahlenderBetrag.setEditable(false);
 
-        _bezahlterBetrag = new JFormattedTextField(euroFormat);
+        _bezahlterBetrag = new JFormattedTextField();
         _bezahlterBetrag.setValue(0);
 
-        _restBetrag = new JFormattedTextField(euroFormat);
+        _restBetrag = new JFormattedTextField();
         _restBetrag.setEditable(false);
         _restBetrag.setValue(0);
 
-        _zuzahlenLabel = new JLabel("Zuzahlender Betrag: ");
-        _bezahltLabel = new JLabel("Gezahlter Betrag: ");
-        _restLabel = new JLabel("Restbetrag");
+        _zuzahlenLabel = new JLabel("Zuzahlender Betrag (eurocent): ");
+        _bezahltLabel = new JLabel("Gezahlter Betrag (eurocent): ");
+        _restLabel = new JLabel("Restbetrag (eurocent):");
 
         panel.add(_zuzahlenLabel);
         panel.add(_zuzahlenderBetrag);
@@ -122,6 +126,12 @@ public class BarzahlWerkzeugUI
 
     public void schliesseFenster()
     {
-        _hauptDialog.dispose();
+        _hauptDialog.dispose(); //hier vermutlch problematisch, weil Objekt entfernt, bevor auslesbar.
+    }
+    
+    public void modalTyp()
+    {
+    	_hauptDialog.setModalityType(ModalityType.APPLICATION_MODAL);
+        _hauptDialog.setVisible(true);
     }
 }

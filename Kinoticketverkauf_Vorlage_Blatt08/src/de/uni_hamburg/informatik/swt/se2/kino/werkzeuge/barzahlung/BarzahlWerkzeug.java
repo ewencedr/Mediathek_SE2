@@ -21,8 +21,12 @@ public class BarzahlWerkzeug
         _ui.getOkayButton()
             .setEnabled(false);
         registriereUIAktionen();
+        _ui.modalTyp();
     }
 
+    /**
+     * Registriert UI aktionen
+     */
     private void registriereUIAktionen()
     {
         _ui.getOkayButton()
@@ -33,7 +37,7 @@ public class BarzahlWerkzeug
                 {
                     _bezahlzustand = true;
                     _ui.schliesseFenster();
-                    //TODO: Wie wissen wir, dass bezahlt wurde?
+                    
                 }
             });
 
@@ -44,75 +48,38 @@ public class BarzahlWerkzeug
                 public void actionPerformed(ActionEvent e)
                 {
                     _ui.schliesseFenster();
-                    //TODO: Wie wissen wir, dass NICHT bezahlt wurde?
+                 
                 }
             });
 
         _ui.getBezahlFeld()
             .addPropertyChangeListener(new PropertyChangeListener()
             {
-                //TODO: Änderung von formatted Textfield zählt auch als Aktion performed?
                 @Override
                 public void propertyChange(PropertyChangeEvent e)
                 {
-
-                    if (_ui.getBezahlFeld()
-                        .isEditValid())
+                    String val = _ui.getBezahlFeld()
+                        .getText().replace(".", "");
+                    int int_val = 0;
+                    try
                     {
-                        String val = _ui.getBezahlFeld()
-                            .getValue()
-                            .toString();
-
-                        int int_val = rechnePreisUm(val);
-                        _ui.getRueckgabeFeld()
-                            .setValue(
-                                    (float) restpreisBerechnen(int_val) / 100);
-                        reagiereAufEingabe(int_val);
-                    }
-
+                    	boolean latch = val.matches("[1-9]+[0-9]*");
+                        
+                        if (latch) {
+                        	 int_val= Integer.parseInt(val);
+                        }
+                    } catch(NumberFormatException exc)
+                    {
+                    
+                    } finally {
+                    	_ui.getRueckgabeFeld().setValue(restpreisBerechnen(int_val));
+                    	_ui.getBezahlFeld().setValue(int_val);
+                    	reagiereAufEingabe(int_val);
+					}
+                    	
+                    
                 }
             });
-    }
-
-    private int rechnePreisUm(String val)
-    {
-        int int_val = 0;
-        if (val.contains("."))
-        {
-            String[] string_array = val.split("[.]");
-            String euro = string_array[0];
-            String cent = string_array[1];
-            if (cent.length() > 2)
-            {
-                String new_cent = cent.substring(0, 2);
-                int int_temp2 = Integer.parseInt(new_cent);
-                char temp = cent.charAt(2);
-                int temp_int = Character.getNumericValue(temp);
-
-                if (temp_int > 4)
-                {
-                    System.out.println("Temp_int: " + temp_int);
-                    int_temp2++;
-                    cent = String.valueOf(int_temp2);
-                }
-                else
-                {
-                    cent = cent.substring(0, 2);
-                }
-
-            }
-            else if (cent.length() == 1)
-            {
-                cent = cent + "0";
-            }
-            String output = euro + cent;
-            int_val = Integer.parseInt(output);
-        }
-        else
-        {
-            int_val = 100 * Integer.parseInt(val);
-        }
-        return int_val;
     }
 
     private int restpreisBerechnen(int eingabe)
@@ -140,5 +107,4 @@ public class BarzahlWerkzeug
     {
         return _bezahlzustand;
     }
-
 }
