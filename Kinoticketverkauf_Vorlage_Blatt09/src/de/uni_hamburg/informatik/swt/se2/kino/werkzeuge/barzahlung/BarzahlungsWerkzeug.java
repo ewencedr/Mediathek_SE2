@@ -34,6 +34,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 {
 
     private BarzahlungsWerkzeugUI _ui;
+    //TODO: Geldbetrag verwenden
     private int _preis;
     private boolean _barzahlungErfolgreich;
     private boolean _ausreichenderGeldbetrag;
@@ -57,6 +58,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     public void fuehreBarzahlungDurch(int preis)
     {
+        //TODO: Geldbetrag verwenden
         _preis = preis;
         _ausreichenderGeldbetrag = false;
         _barzahlungErfolgreich = false;
@@ -88,23 +90,25 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void registriereAbbrechenAktionen()
     {
-        _ui.getAbbrechenButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+        _ui.getAbbrechenButton()
+            .addActionListener(new ActionListener()
             {
-                bezahlenNichtErfolgreich();
-            }
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    bezahlenNichtErfolgreich();
+                }
 
-        });
-        _ui.getDialog().addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosed(WindowEvent e)
+            });
+        _ui.getDialog()
+            .addWindowListener(new WindowAdapter()
             {
-                bezahlenNichtErfolgreich();
-            }
-        });
+                @Override
+                public void windowClosed(WindowEvent e)
+                {
+                    bezahlenNichtErfolgreich();
+                }
+            });
     }
 
     /**
@@ -113,14 +117,15 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void registriereOKAktion()
     {
-        _ui.getGeldErhaltenButton().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+        _ui.getGeldErhaltenButton()
+            .addActionListener(new ActionListener()
             {
-                bezahlenErfolgreich();
-            }
-        });
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    bezahlenErfolgreich();
+                }
+            });
     }
 
     /**
@@ -129,27 +134,29 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void registriereGeyahltTextfieldEingabeAktion()
     {
-        _ui.getGezahltTextfield().addKeyListener(new KeyAdapter()
-        {
-            @Override
-            public void keyReleased(KeyEvent e)
+        _ui.getGezahltTextfield()
+            .addKeyListener(new KeyAdapter()
             {
-                switch (e.getKeyCode())
+                @Override
+                public void keyReleased(KeyEvent e)
                 {
-                case KeyEvent.VK_ESCAPE:
-                    bezahlenNichtErfolgreich();
-                    break;
-                case KeyEvent.VK_ENTER:
-                    if (_ausreichenderGeldbetrag)
+                    switch (e.getKeyCode())
                     {
-                        bezahlenErfolgreich();
+                    case KeyEvent.VK_ESCAPE:
+                        bezahlenNichtErfolgreich();
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        if (_ausreichenderGeldbetrag)
+                        {
+                            bezahlenErfolgreich();
+                        }
+                        break;
+                    default:
+                        reagiereAufEingabeText(_ui.getGezahltTextfield()
+                            .getText());
                     }
-                    break;
-                default:
-                    reagiereAufEingabeText(_ui.getGezahltTextfield().getText());
                 }
-            }
-        });
+            });
     }
 
     /**
@@ -162,6 +169,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void reagiereAufEingabeText(String eingabePreis)
     {
+        //TODO: Geldbetrag verwenden
         if (eingabePreis.isEmpty())
         {
             eingabePreis = "0";
@@ -206,6 +214,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
     {
         zeigePreis();
         loescheGezahltenBetrag();
+        //TODO: Geldbetrag verwenden
         zeigeRestbetrag(_preis);
         zeigeAusreichenderGeldbetragStatus();
     }
@@ -215,7 +224,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void loescheGezahltenBetrag()
     {
-        _ui.getGezahltTextfield().setText("");
+        _ui.getGezahltTextfield()
+            .setText("");
     }
 
     /**
@@ -225,7 +235,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigeAusreichenderGeldbetragStatus()
     {
-        _ui.getGeldErhaltenButton().setEnabled(_ausreichenderGeldbetrag);
+        _ui.getGeldErhaltenButton()
+            .setEnabled(_ausreichenderGeldbetrag);
         _ui.markiereGezahltTextfield(_ausreichenderGeldbetrag);
         _ui.markiereRestbetragTextfield(_ausreichenderGeldbetrag);
     }
@@ -238,7 +249,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigeFehlertext()
     {
-        _ui.getRestbetragTextfield().setText(" Err ");
+        _ui.getRestbetragTextfield()
+            .setText(" Err ");
     }
 
     /**
@@ -248,7 +260,9 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigeRestbetrag(int differenz)
     {
-        _ui.getRestbetragTextfield().setText(differenz + " Eurocent");
+        //TODO: Geldbetrag verwenden
+        _ui.getRestbetragTextfield()
+            .setText(differenz + " Eurocent");
     }
 
     /**
@@ -256,6 +270,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigePreis()
     {
-        _ui.getPreisTextfield().setText(_preis + " Eurocent");
+        //TODO: Geldbetrag verwenden
+        _ui.getPreisTextfield()
+            .setText(_preis + " Eurocent");
     }
 }
