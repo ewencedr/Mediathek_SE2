@@ -1,7 +1,8 @@
 package de.uni_hamburg.informatik.swt.se2.kino.fachwerte;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.regex.*;
 
 public final class Geldbetrag
 {
@@ -28,7 +29,7 @@ public final class Geldbetrag
     {
         assert eurocent >= 0 : "Vorbedingung verletzt: eurocent >= 0";
 
-        return select("" + eurocent);
+        return select(String.valueOf(eurocent));
     }
 
     /**
@@ -58,9 +59,11 @@ public final class Geldbetrag
      */
     public static boolean istGueltigerGeldstring(String eurocent) 
     {
-    	String GELD_REGEX = "([0-9])*([,.]){1}([0-9]){2}";
+    	String GELD_REGEX = "([0-9])*";
+    	Pattern pat = Pattern.compile(GELD_REGEX);
+    	Matcher mat = pat.matcher(eurocent);
     	
-    	if (eurocent.matches(GELD_REGEX)) {
+    	if (mat.matches()) {
     		return true;
     	}
     	else {
@@ -76,7 +79,7 @@ public final class Geldbetrag
      */
     public static Geldbetrag addiere(Geldbetrag summand1, Geldbetrag summand2)
     {
-    	//TODO: Assert ist addieren moeglich
+    	assert istAddierenMoeglich(summand1,summand2) : "Vorbedingung verletzt: istAddierenMoeglich(summand1,summand2)";
     	return Geldbetrag.select(summand1.returnValue() + summand2.returnValue());
     }
 
@@ -89,7 +92,7 @@ public final class Geldbetrag
     public static boolean istAddierenMoeglich(Geldbetrag summand1,
             Geldbetrag summand2)
     {
-    	int sum = summand1.returnValue() + summand2.returnValue();
+    	long sum = (long) summand1.returnValue() + (long) summand2.returnValue();
     	if(sum >= Integer.MAX_VALUE)
     	{
     		return false;
@@ -129,6 +132,7 @@ public final class Geldbetrag
      */
     public static Geldbetrag multipliziere(Geldbetrag multiplikant, int faktor)
     {
+    	assert istMultiplizierenMoeglich(multiplikant,faktor) : "Vorbedingung verletzt: istMultiplizierenMoeglich(multiplikant,faktor)";
     	return Geldbetrag.select(multiplikant.returnValue() * faktor);
     }
 
@@ -140,7 +144,7 @@ public final class Geldbetrag
      */
     public static boolean istMultiplizierenMoeglich(Geldbetrag multiplikant, int faktor)
     {
-    	int produkt = multiplikant.returnValue() * faktor;
+    	long produkt = (long) multiplikant.returnValue() * (long) faktor;
     	if(produkt >= Integer.MAX_VALUE)
     	{
     		return false;
@@ -172,7 +176,7 @@ public final class Geldbetrag
     @Override
     public String toString()
     {
-    	return ""+_eurocent;
+    	return String.valueOf(_eurocent);
     }
     
     /**
