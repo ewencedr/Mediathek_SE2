@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
  * @author Schrödingers Frauen
  * @version SoSe 2022
  */
-
 public final class Geldbetrag
 {
     private final int _eurocent;
@@ -103,14 +102,7 @@ public final class Geldbetrag
     {
         long sum = (long) summand1.returnValue()
                 + (long) summand2.returnValue();
-        if (sum >= Integer.MAX_VALUE)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return (sum <= Integer.MAX_VALUE);
     }
 
     /**
@@ -133,7 +125,6 @@ public final class Geldbetrag
             return Geldbetrag
                 .select(summand2.returnValue() - summand1.returnValue());
         }
-
     }
 
     /**
@@ -160,14 +151,7 @@ public final class Geldbetrag
             int faktor)
     {
         long produkt = (long) multiplikant.returnValue() * (long) faktor;
-        if (produkt >= Integer.MAX_VALUE)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return (produkt <= Integer.MAX_VALUE);
     }
 
     /**
@@ -200,7 +184,6 @@ public final class Geldbetrag
      * 
      * @return int des Geldbetrages
      */
-
     public int returnValue()
     {
         return _eurocent;

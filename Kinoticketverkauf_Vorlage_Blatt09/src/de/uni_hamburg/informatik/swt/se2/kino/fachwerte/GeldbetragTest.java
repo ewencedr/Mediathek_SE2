@@ -72,9 +72,10 @@ public class GeldbetragTest
         assertFalse(Geldbetrag.istGueltigerGeldstring("45,00"));
         assertFalse(Geldbetrag.istGueltigerGeldstring("10,ab"));
         assertFalse(Geldbetrag.istGueltigerGeldstring("20ab"));
-        assertFalse(Geldbetrag.istGueltigerGeldstring("20.26"));
+        assertFalse(Geldbetrag.istGueltigerGeldstring("202.6"));
         assertFalse(Geldbetrag.istGueltigerGeldstring("20,2605"));
         assertFalse(Geldbetrag.istGueltigerGeldstring("2.026"));
         assertTrue(Geldbetrag.istGueltigerGeldstring("2050"));
+        assertTrue(Geldbetrag.istGueltigerGeldstring(""));
     }
 }
