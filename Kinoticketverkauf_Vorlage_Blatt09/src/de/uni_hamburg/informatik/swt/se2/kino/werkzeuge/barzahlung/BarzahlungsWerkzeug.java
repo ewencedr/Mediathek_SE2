@@ -7,10 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.ObservableSubwerkzeug;
 
 /**
- * TODO für Blatt 8: Löschen
  * 
  * Das Barzahlungswerkzeug behandelt die Kasseneingabe. Es ermöglicht die
  * Eingabe eines gezahlten Betrags und ermittelt automatisch den Restbetrag zur
@@ -35,7 +35,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     private BarzahlungsWerkzeugUI _ui;
     //TODO: Geldbetrag verwenden
-    private int _preis;
+    private Geldbetrag _preis;
     private boolean _barzahlungErfolgreich;
     private boolean _ausreichenderGeldbetrag;
 
@@ -58,8 +58,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     public void fuehreBarzahlungDurch(int preis)
     {
-        //TODO: Geldbetrag verwenden
-        _preis = preis;
+        _preis = Geldbetrag.select(preis);
         _ausreichenderGeldbetrag = false;
         _barzahlungErfolgreich = false;
         setzeUIAnfangsstatus();
@@ -176,9 +175,11 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         }
         try
         {
-            int eingabeBetrag = Integer.parseInt(eingabePreis);
-            _ausreichenderGeldbetrag = (eingabeBetrag >= _preis);
-            int differenz = Math.abs(eingabeBetrag - _preis);
+            Geldbetrag eingabeBetrag = Geldbetrag.select(eingabePreis);
+            _ausreichenderGeldbetrag = Geldbetrag
+                .istGroesserGleich(eingabeBetrag, _preis);
+            Geldbetrag differenz = Geldbetrag.subtrahiere(eingabeBetrag,
+                    _preis);
             zeigeRestbetrag(differenz);
         }
         catch (NumberFormatException ignore)
@@ -258,11 +259,11 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * 
      * @param differenz ein eingegebener Betrag
      */
-    private void zeigeRestbetrag(int differenz)
+    private void zeigeRestbetrag(Geldbetrag differenz)
     {
         //TODO: Geldbetrag verwenden
         _ui.getRestbetragTextfield()
-            .setText(differenz + " Eurocent");
+            .setText(differenz.toString() + " Eurocent");
     }
 
     /**
@@ -272,6 +273,6 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
     {
         //TODO: Geldbetrag verwenden
         _ui.getPreisTextfield()
-            .setText(_preis + " Eurocent");
+            .setText(_preis.toString() + " Eurocent");
     }
 }

@@ -1,8 +1,20 @@
 package de.uni_hamburg.informatik.swt.se2.kino.fachwerte;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.regex.*;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Ein Geldbetrag, bestehend aus Euro und Cent und wird hier immer als Eurocent verwendet.
+ * 
+ * Das Klassenobjekt stellt Hilfsmethoden zur Verfügung, um Geldbeträge über eine Klasse 
+ * zu verwalten und mit ihnen zu rechnen. Es erstellt einen Pool aus Objekten, sodass es 
+ * nicht mehrere Objekte zum gleichen Geldbetrag gibt.
+ * 
+ * @author Schrödingers Frauen
+ * @version SoSe 2022
+ */
 
 public final class Geldbetrag
 {
@@ -57,18 +69,13 @@ public final class Geldbetrag
      * @param eurocent zu ueberpruefender String
      * @return boolean ob gueltiger String oder nicht
      */
-    public static boolean istGueltigerGeldstring(String eurocent) 
+    public static boolean istGueltigerGeldstring(String eurocent)
     {
-    	String GELD_REGEX = "([0-9])*";
-    	Pattern pat = Pattern.compile(GELD_REGEX);
-    	Matcher mat = pat.matcher(eurocent);
-    	
-    	if (mat.matches()) {
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
+        String GELD_REGEX = "([0-9])*";
+        Pattern pat = Pattern.compile(GELD_REGEX);
+        Matcher mat = pat.matcher(eurocent);
+
+        return mat.matches();
     }
 
     /**
@@ -79,8 +86,10 @@ public final class Geldbetrag
      */
     public static Geldbetrag addiere(Geldbetrag summand1, Geldbetrag summand2)
     {
-    	assert istAddierenMoeglich(summand1,summand2) : "Vorbedingung verletzt: istAddierenMoeglich(summand1,summand2)";
-    	return Geldbetrag.select(summand1.returnValue() + summand2.returnValue());
+        assert istAddierenMoeglich(summand1,
+                summand2) : "Vorbedingung verletzt: istAddierenMoeglich(summand1,summand2)";
+        return Geldbetrag
+            .select(summand1.returnValue() + summand2.returnValue());
     }
 
     /**
@@ -92,14 +101,16 @@ public final class Geldbetrag
     public static boolean istAddierenMoeglich(Geldbetrag summand1,
             Geldbetrag summand2)
     {
-    	long sum = (long) summand1.returnValue() + (long) summand2.returnValue();
-    	if(sum >= Integer.MAX_VALUE)
-    	{
-    		return false;
-    	}
-    	else {
-    		return true;
-    	}
+        long sum = (long) summand1.returnValue()
+                + (long) summand2.returnValue();
+        if (sum >= Integer.MAX_VALUE)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /**
@@ -112,17 +123,19 @@ public final class Geldbetrag
     public static Geldbetrag subtrahiere(Geldbetrag summand1,
             Geldbetrag summand2)
     {
-    	if (Geldbetrag.istGroesserGleich(summand1, summand2))
-    	{
-    		return Geldbetrag.select(summand1.returnValue() - summand2.returnValue());
-    	}
-    	else
-    	{
-    		return Geldbetrag.select(summand2.returnValue() - summand1.returnValue());
-    	}
-    	
+        if (Geldbetrag.istGroesserGleich(summand1, summand2))
+        {
+            return Geldbetrag
+                .select(summand1.returnValue() - summand2.returnValue());
+        }
+        else
+        {
+            return Geldbetrag
+                .select(summand2.returnValue() - summand1.returnValue());
+        }
+
     }
-    
+
     /**
      * Multipliziert zwei Geldbetraege. 
      * 
@@ -132,8 +145,9 @@ public final class Geldbetrag
      */
     public static Geldbetrag multipliziere(Geldbetrag multiplikant, int faktor)
     {
-    	assert istMultiplizierenMoeglich(multiplikant,faktor) : "Vorbedingung verletzt: istMultiplizierenMoeglich(multiplikant,faktor)";
-    	return Geldbetrag.select(multiplikant.returnValue() * faktor);
+        assert istMultiplizierenMoeglich(multiplikant,
+                faktor) : "Vorbedingung verletzt: istMultiplizierenMoeglich(multiplikant,faktor)";
+        return Geldbetrag.select(multiplikant.returnValue() * faktor);
     }
 
     /**
@@ -142,16 +156,18 @@ public final class Geldbetrag
      * @param faktor zweiter multiplikant
      * @return boolean True wenn summieren erlaubt ist.
      */
-    public static boolean istMultiplizierenMoeglich(Geldbetrag multiplikant, int faktor)
+    public static boolean istMultiplizierenMoeglich(Geldbetrag multiplikant,
+            int faktor)
     {
-    	long produkt = (long) multiplikant.returnValue() * (long) faktor;
-    	if(produkt >= Integer.MAX_VALUE)
-    	{
-    		return false;
-    	}
-    	else {
-    		return true;
-    	}
+        long produkt = (long) multiplikant.returnValue() * (long) faktor;
+        if (produkt >= Integer.MAX_VALUE)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /**
@@ -163,28 +179,29 @@ public final class Geldbetrag
     public static boolean istGroesserGleich(Geldbetrag betrag1,
             Geldbetrag betrag2)
     {
-    	if (betrag1.returnValue() >= betrag2.returnValue())
-    	{
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
+        if (betrag1.returnValue() >= betrag2.returnValue())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
     public String toString()
     {
-    	return String.valueOf(_eurocent);
+        return String.valueOf(_eurocent);
     }
-    
+
     /**
      * Returnt int value vom Geldbetrag.
      * 
      * @return int des Geldbetrages
      */
-    private int returnValue()
+
+    public int returnValue()
     {
         return _eurocent;
     }
